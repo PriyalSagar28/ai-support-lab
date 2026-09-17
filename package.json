@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "evaluate:batch": "tsx scripts/evaluate-batch.ts"
   },
   "dependencies": {
     "@google/genai": "^2.23.0",
@@ -20,6 +21,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }
