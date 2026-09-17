@@ -9,6 +9,7 @@
 // environment variables here, and this file must never be imported from a
 // "use client" component.
 
+import { ApiError, GoogleGenAI } from "@google/genai";
 import type { Category } from "./categories";
 import type { Sentiment, Urgency } from "./sentiment-labels";
 import type { RiskFlagType } from "./risk-flags";
@@ -410,15 +411,94 @@ const mockProvider: AIProvider = {
   },
 };
 
+// --- Gemini provider ---------------------------------------------------------
+//
+// Real provider backed by the Google Gemini API. Every prompt built by the
+// lib/ai/* modules already asks for a single raw JSON object, so this
+// provider just needs to forward the prompt and return the model's text —
+// all response parsing/validation stays in the calling module.
+
+let cachedGeminiClient: GoogleGenAI | null = null;
+
+function getGeminiClient(): GoogleGenAI {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      "GEMINI_API_KEY is not set. Add it to .env.local to use AI_PROVIDER=gemini."
+    );
+  }
+  if (!cachedGeminiClient) {
+    cachedGeminiClient = new GoogleGenAI({ apiKey });
+  }
+  return cachedGeminiClient;
+}
+
+// "-latest" so Google can move it forward without us re-pinning; picked
+// over the plain "gemini-flash-latest" alias because that one was observed
+// returning persistent 503 "high demand" errors (even for trivial prompts)
+// while this lite variant stayed reliable.
+const GEMINI_MODEL = "gemini-flash-lite-latest";
+
+// Transient overload/rate-limit errors are worth a couple of quick retries
+// before giving up — anything else (bad API key, invalid request) should
+// fail immediately since retrying won't help.
+const RETRYABLE_STATUS_CODES = new Set([429, 503]);
+const RETRY_DELAYS_MS = [300, 900];
+
+function isRetryableError(error: unknown): boolean {
+  return error instanceof ApiError && RETRYABLE_STATUS_CODES.has(error.status);
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+const geminiProvider: AIProvider = {
+  name: "gemini",
+  async complete(prompt: string) {
+    const client = getGeminiClient();
+
+    let lastError: unknown;
+    for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
+      try {
+        const response = await client.models.generateContent({
+          model: GEMINI_MODEL,
+          contents: prompt,
+          config: {
+            responseMimeType: "application/json",
+          },
+        });
+
+        const text = response.text;
+        if (!text || text.trim().length === 0) {
+          throw new Error("Gemini API returned an empty response.");
+        }
+        return text;
+      } catch (error) {
+        lastError = error;
+        if (!isRetryableError(error) || attempt === RETRY_DELAYS_MS.length) {
+          break;
+        }
+        await sleep(RETRY_DELAYS_MS[attempt]);
+      }
+    }
+
+    const message = lastError instanceof Error ? lastError.message : String(lastError);
+    throw new Error(`Gemini API request failed: ${message}`);
+  },
+};
+
 /**
- * Selects an AI provider based on the AI_PROVIDER env var. Only "mock" is
- * registered today. Later phases will add real providers (e.g. "anthropic")
- * here without changing any caller.
+ * Selects an AI provider based on the AI_PROVIDER env var. Defaults to
+ * "mock" so the app is demoable without any API key. Set AI_PROVIDER=gemini
+ * (with GEMINI_API_KEY set) to use the real Gemini provider instead.
  */
 export function getProvider(): AIProvider {
   const name = process.env.AI_PROVIDER ?? "mock";
 
   switch (name) {
+    case "gemini":
+      return geminiProvider;
     case "mock":
     default:
       return mockProvider;
