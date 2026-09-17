@@ -7,7 +7,7 @@ type Props = {
 export default function PageHeader({ phase, title, description }: Props) {
   return (
     <header className="page-header">
-      <span className="badge badge-mock">{phase} · Mock demo</span>
+      <span className="badge badge-mock">{phase}</span>
       <h1>{title}</h1>
       <p>{description}</p>
     </header>

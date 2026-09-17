@@ -70,7 +70,7 @@ export default function EvaluatePage() {
       <PageHeader
         phase="Phase 4"
         title="Response evaluation"
-        description="QA-review a support reply against the original email: six scored dimensions, an overall score, actionable feedback, and flags for risky claims like unsupported refund promises or invented policies. Runs against the mock provider today (AI_PROVIDER=mock) — same provider abstraction as every other module."
+        description="QA-review a support reply against the original email: six scored dimensions, an overall score, actionable feedback, and flags for risky claims like unsupported refund promises or invented policies. Powered by Google Gemini via the same provider abstraction as every other module (a mock provider is also available for offline demos)."
       />
 
       <div className="field">
