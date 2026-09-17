@@ -1,69 +1,59 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
+import { modules } from "@/lib/modules";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+    <div className="page">
+      <section className="hero">
+        <span className="badge badge-mock">5 phases · fully working demo</span>
+        <h1>AI Support Lab</h1>
+        <p className="lede">
+          A learning project for the core AI capabilities behind a customer-support
+          product: categorizing emails, reading sentiment, drafting suggested replies,
+          and — the hard part — measuring how good those replies actually are. Every
+          module below runs end to end today against a mock AI provider, no API key
+          required.
+        </p>
+        <p className="disclaimer">Personal learning project, built to learn by doing.</p>
+        <Link href="/pipeline" className="btn btn-primary">
+          Try the full pipeline →
+        </Link>
+      </section>
+
+      <section>
+        <h2 className="section-label">Modules</h2>
+        <div className="module-grid">
+          {modules.map((m) => (
+            <Link
+              key={m.href}
+              href={m.href}
+              className={m.featured ? "module-card module-card-featured" : "module-card"}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <span className="badge badge-mock">{m.phase}</span>
+              <h3>{m.label}</h3>
+              <p>{m.description}</p>
+            </Link>
+          ))}
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
+
+      <section>
+        <h2 className="section-label">How this is built</h2>
+        <ul className="rules">
+          <li>Next.js (App Router) + TypeScript, deployed later on Vercel.</li>
+          <li>
+            Every AI capability goes through one provider-agnostic interface
+            (lib/ai/provider.ts) — starting with a mock provider, swappable via the
+            AI_PROVIDER environment variable.
+          </li>
+          <li>No API key ever reaches the browser — all AI calls run server-side.</li>
+          <li>
+            The pipeline reuses the same categorize/sentiment/generate/evaluate API
+            routes as the individual module pages — nothing new was added to the AI
+            layer to build it, it just sequences existing calls.
+          </li>
+        </ul>
+      </section>
     </div>
   );
 }
