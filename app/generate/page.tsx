@@ -63,7 +63,7 @@ export default function GeneratePage() {
       <PageHeader
         phase="Phase 3"
         title="AI response generation"
-        description="Draft a suggested reply to the incoming email, informed by the sentiment and urgency detected in Phase 2. Runs against the mock provider today (AI_PROVIDER=mock) — same provider abstraction as categorization and sentiment."
+        description="Draft a suggested reply to the incoming email, informed by the sentiment and urgency detected in Phase 2. Powered by Google Gemini via the same provider abstraction as categorization and sentiment (a mock provider is also available for offline demos)."
       />
 
       <EmailInput value={email} onChange={setEmail} />

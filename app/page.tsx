@@ -5,16 +5,15 @@ export default function HomePage() {
   return (
     <div className="page">
       <section className="hero">
-        <span className="badge badge-mock">5 phases · fully working demo</span>
+        <span className="badge badge-mock">Live · powered by Google Gemini</span>
         <h1>AI Support Lab</h1>
         <p className="lede">
-          A learning project for the core AI capabilities behind a customer-support
-          product: categorizing emails, reading sentiment, drafting suggested replies,
-          and — the hard part — measuring how good those replies actually are. Every
-          module below runs end to end today against a mock AI provider, no API key
-          required.
+          An end-to-end AI workflow for customer-support email handling: categorizing
+          incoming emails, reading sentiment and urgency, drafting a reply, and — the
+          hard part — evaluating how good that reply actually is. Every module below
+          runs against Google Gemini for real AI output.
         </p>
-        <p className="disclaimer">Personal learning project, built to learn by doing.</p>
+        <p className="disclaimer">Independent project, built solo.</p>
         <Link href="/pipeline" className="btn btn-primary">
           Try the full pipeline →
         </Link>
@@ -40,10 +39,11 @@ export default function HomePage() {
       <section>
         <h2 className="section-label">How this is built</h2>
         <ul className="rules">
-          <li>Next.js (App Router) + TypeScript, deployed later on Vercel.</li>
+          <li>Next.js (App Router) + TypeScript, deployed on Vercel.</li>
           <li>
             Every AI capability goes through one provider-agnostic interface
-            (lib/ai/provider.ts) — starting with a mock provider, swappable via the
+            (lib/ai/provider.ts) — a mock provider for offline demos, and a real
+            Google Gemini provider for production output, selected via the
             AI_PROVIDER environment variable.
           </li>
           <li>No API key ever reaches the browser — all AI calls run server-side.</li>

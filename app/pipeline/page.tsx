@@ -37,6 +37,8 @@ function overallLabel(score: number): string {
 }
 
 export default function PipelinePage() {
+  const [inputMode, setInputMode] = useState<"sample" | "custom">("sample");
+
   const [from, setFrom] = useState(pipelineSamples[0].from);
   const [subject, setSubject] = useState(pipelineSamples[0].subject);
   const [body, setBody] = useState(pipelineSamples[0].body);
@@ -55,14 +57,10 @@ export default function PipelinePage() {
   const [evaluating, setEvaluating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const email = `Subject: ${subject}\n\n${body}`;
+  const email = `Subject: ${subject.trim()}\n\n${body.trim()}`;
+  const canRunAnalysis = inputMode === "sample" || (subject.trim().length > 0 && body.trim().length > 0);
 
-  function loadSample(id: string) {
-    const sample = pipelineSamples.find((s) => s.id === id);
-    if (!sample) return;
-    setFrom(sample.from);
-    setSubject(sample.subject);
-    setBody(sample.body);
+  function resetResults() {
     setCategory(null);
     setSentimentResult(null);
     setReply("");
@@ -72,6 +70,30 @@ export default function PipelinePage() {
     setGenerateStatus("pending");
     setEvaluateStatus("pending");
     setError(null);
+  }
+
+  function loadSample(id: string) {
+    const sample = pipelineSamples.find((s) => s.id === id);
+    if (!sample) return;
+    setFrom(sample.from);
+    setSubject(sample.subject);
+    setBody(sample.body);
+    resetResults();
+  }
+
+  function useSampleMode() {
+    setInputMode("sample");
+    loadSample(pipelineSamples[0].id);
+  }
+
+  function useCustomMode() {
+    if (inputMode !== "custom") {
+      setFrom("");
+      setSubject("");
+      setBody("");
+      resetResults();
+    }
+    setInputMode("custom");
   }
 
   async function runAnalysis() {
@@ -165,32 +187,93 @@ export default function PipelinePage() {
         description="The full workflow in one place: categorize the email, read sentiment and urgency, draft a reply, then QA-evaluate it before it goes out. This page reuses every module from Phases 1-4 exactly as built — it only sequences the existing API calls, nothing new was added to the AI layer itself."
       />
 
-      <div className="field">
-        <label htmlFor="pipeline-sample-picker">Load a sample ticket</label>
-        <select id="pipeline-sample-picker" defaultValue="" onChange={(e) => loadSample(e.target.value)}>
-          <option value="" disabled>
-            Choose a scenario…
-          </option>
-          {pipelineSamples.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.label}
-            </option>
-          ))}
-        </select>
+      <div className="field-row">
+        <button
+          type="button"
+          className={inputMode === "sample" ? "btn btn-primary" : "btn"}
+          onClick={useSampleMode}
+        >
+          Use a sample
+        </button>
+        <button
+          type="button"
+          className={inputMode === "custom" ? "btn btn-primary" : "btn"}
+          onClick={useCustomMode}
+        >
+          Write your own email
+        </button>
       </div>
 
-      <div className="inbox-card">
-        <div className="inbox-card-header">
-          <span className="inbox-card-from">{from}</span>
-          <span className="inbox-card-subject">{subject}</span>
-        </div>
-        <div className="field">
-          <label htmlFor="pipeline-body">Email body</label>
-          <textarea id="pipeline-body" rows={6} value={body} onChange={(e) => setBody(e.target.value)} />
-        </div>
-      </div>
+      {inputMode === "sample" ? (
+        <>
+          <div className="field">
+            <label htmlFor="pipeline-sample-picker">Load a sample ticket</label>
+            <select id="pipeline-sample-picker" defaultValue="" onChange={(e) => loadSample(e.target.value)}>
+              <option value="" disabled>
+                Choose a scenario…
+              </option>
+              {pipelineSamples.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <button className="btn btn-primary" onClick={runAnalysis} disabled={analyzing}>
+          <div className="inbox-card">
+            <div className="inbox-card-header">
+              <span className="inbox-card-from">{from}</span>
+              <span className="inbox-card-subject">{subject}</span>
+            </div>
+            <div className="field">
+              <label htmlFor="pipeline-body">Email body</label>
+              <textarea id="pipeline-body" rows={6} value={body} onChange={(e) => setBody(e.target.value)} />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="inbox-card">
+          <p className="note">
+            Enter a customer email to see how the system categorizes it, detects
+            sentiment and urgency, drafts a reply, and evaluates the response.
+          </p>
+          <div className="field">
+            <label htmlFor="custom-from">Customer name (optional)</label>
+            <input
+              id="custom-from"
+              type="text"
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+              placeholder="Alex"
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="custom-subject">Subject</label>
+            <input
+              id="custom-subject"
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder="Charged twice for my subscription"
+              required
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="custom-body">Email body</label>
+            <textarea
+              id="custom-body"
+              rows={6}
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              placeholder="I noticed two charges for the same subscription on my account. Could you please check this and let me know how it can be resolved?"
+              required
+            />
+          </div>
+          {!canRunAnalysis && <p className="note">Subject and email body are required.</p>}
+        </div>
+      )}
+
+      <button className="btn btn-primary" onClick={runAnalysis} disabled={analyzing || !canRunAnalysis}>
         {analyzing ? "Running analysis…" : "Run full analysis"}
       </button>
 

@@ -44,7 +44,7 @@ export default function CategorizePage() {
       <PageHeader
         phase="Phase 1"
         title="Email categorization"
-        description="Classify an incoming support email into a category by prompting an AI provider for structured JSON. Runs against the mock provider today (AI_PROVIDER=mock) — swapping in a real provider later only means editing lib/ai/provider.ts, no UI or API changes."
+        description="Classify an incoming support email into a category by prompting an AI provider for structured JSON. Powered by Google Gemini via the provider-agnostic interface in lib/ai/provider.ts (a mock provider is also available for offline demos)."
       />
 
       <EmailInput value={email} onChange={setEmail} />

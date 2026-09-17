@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AI Support Lab",
   description:
-    "A learning project exploring AI-powered email categorization, sentiment analysis, response generation, and evaluation.",
+    "An AI-powered workflow for customer-support email categorization, sentiment analysis, reply generation, and quality evaluation, using Google Gemini.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="container">{children}</main>
         <footer className="footer">
           <div className="container">
-            AI Support Lab — an independent personal learning project.
+            AI Support Lab — an independent project for AI-powered customer support email analysis.
           </div>
         </footer>
       </body>

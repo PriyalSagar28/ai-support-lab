@@ -23,7 +23,7 @@ export const modules: ModuleInfo[] = [
     href: "/generate",
     label: "Generate",
     phase: "Phase 3",
-    description: "Draft a suggested reply grounded in past examples.",
+    description: "Generate a context-aware customer-support reply with Google Gemini.",
   },
   {
     href: "/evaluate",
