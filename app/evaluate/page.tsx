@@ -68,7 +68,7 @@ export default function EvaluatePage() {
   return (
     <div className="page">
       <PageHeader
-        phase="Phase 4"
+        phase="Individual tool"
         title="Response evaluation"
         description="QA-review a support reply against the original email: six scored dimensions, an overall score, actionable feedback, and flags for risky claims like unsupported refund promises or invented policies. Powered by Google Gemini via the same provider abstraction as every other module (a mock provider is also available for offline demos)."
       />
@@ -186,7 +186,8 @@ export default function EvaluatePage() {
           <p className="note">
             Overall score is calculated from the six dimension scores above (not asked of
             the model), and is capped below 5 if a critical risk flag (an unsupported
-            promise, an unverified fix claim, or an invented policy) is present.
+            promise, an unverified fix claim, or an invented policy) is present, or below
+            7 if a major flag (an ignored question or inappropriate tone) is present.
           </p>
         </ResultCard>
       )}

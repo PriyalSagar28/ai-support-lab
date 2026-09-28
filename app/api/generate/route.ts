@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { generateReply } from "@/lib/ai/generate";
+import { KnowledgeRetrievalError } from "@/lib/ai/knowledge/retrieve";
 import { SENTIMENTS, URGENCIES, type Sentiment, type Urgency } from "@/lib/ai/sentiment-labels";
 
 function isSentiment(value: unknown): value is Sentiment {
@@ -54,6 +55,21 @@ export async function POST(request: Request) {
     const result = await generateReply(email, precomputed);
     return NextResponse.json(result);
   } catch (error) {
+    // Retrieval failed, so no reply was drafted (see generateReply). The
+    // underlying detail is logged server-side only; the client gets a fixed
+    // message plus a machine-readable code so the UI can offer a retry.
+    if (error instanceof KnowledgeRetrievalError) {
+      console.error("Knowledge retrieval failed:", error.message);
+      return NextResponse.json(
+        {
+          error:
+            "Knowledge base retrieval failed (the AI service may be busy or rate-limited), so no reply was generated. Please try again in a moment.",
+          code: "KNOWLEDGE_RETRIEVAL_FAILED",
+          retryable: true,
+        },
+        { status: 503 }
+      );
+    }
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: `Reply generation failed: ${message}` }, { status: 502 });
   }

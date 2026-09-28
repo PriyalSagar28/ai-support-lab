@@ -42,7 +42,7 @@ export default function CategorizePage() {
   return (
     <div className="page">
       <PageHeader
-        phase="Phase 1"
+        phase="Individual tool"
         title="Email categorization"
         description="Classify an incoming support email into a category by prompting an AI provider for structured JSON. Powered by Google Gemini via the provider-agnostic interface in lib/ai/provider.ts (a mock provider is also available for offline demos)."
       />

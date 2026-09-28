@@ -61,9 +61,9 @@ export default function GeneratePage() {
   return (
     <div className="page">
       <PageHeader
-        phase="Phase 3"
+        phase="Individual tool"
         title="AI response generation"
-        description="Draft a suggested reply to the incoming email, informed by the sentiment and urgency detected in Phase 2. Powered by Google Gemini via the same provider abstraction as categorization and sentiment (a mock provider is also available for offline demos)."
+        description="Draft a suggested reply to the incoming email, informed by the detected sentiment and urgency and grounded in the knowledge base."
       />
 
       <EmailInput value={email} onChange={setEmail} />

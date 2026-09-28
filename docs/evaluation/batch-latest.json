@@ -1,0 +1,232 @@
+{
+  "runAt": "2026-09-28T10:27:32.654Z",
+  "provider": "gemini",
+  "datasetSize": 9,
+  "successCount": 9,
+  "failureCount": 0,
+  "pendingCount": 0,
+  "aggregateOverallScore": 8.36,
+  "aggregateDimensionScores": {
+    "toneEmpathy": 8.44,
+    "relevance": 8.11,
+    "clarity": 8.11,
+    "completeness": 7.56,
+    "professionalism": 8.11,
+    "groundedness": 10
+  },
+  "aggregateMethod": "aggregateOverallScore = mean of per-response overallScore across all successfully-evaluated emails accumulated so far (failures and not-yet-attempted items excluded, never counted as 0). aggregateDimensionScores = the same mean applied per dimension. overallScore itself is computed by lib/ai/evaluate.ts as the lowest of: a weighted average of the six dimensions (relevance 25%, groundedness 25%, completeness 20%, toneEmpathy/clarity/professionalism 10% each); the weakest dimension + 1.5; and a risk-flag cap of 4.9 for a critical flag (unsupported refund promise, unverified fix claim, invented policy/fact) or 6.9 for a major flag (ignored customer's question, inappropriate tone).",
+  "results": [
+    {
+      "id": "billing-double-charge",
+      "subject": "Charged twice for my subscription",
+      "status": "ok",
+      "sentiment": "Negative",
+      "urgency": "Medium",
+      "generatedReply": "Hi,\n\nI am so sorry for the frustration this has caused, especially since this has happened to you before. \n\nDuplicate charges caused by a billing system error are refunded in full as soon as the duplicate is confirmed. To help me verify this for you, could you please provide the specific charge dates for the two $29 charges this month?\n\nOnce you reply with those dates, I will check our system and get this sorted out for you right away.\n\nBest regards,\nCustomer Support Team",
+      "scores": {
+        "toneEmpathy": 8,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 7,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.3,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply shows good empathy regarding the previous frustration and correctly follows the knowledge base by asking for the specific charge dates to verify the duplicate before issuing a refund.",
+        "improvements": "It could be slightly more proactive by explaining where the customer can find their charge dates or invoice history.",
+        "topSuggestion": "Include a quick pointer to Settings > Billing > Invoice History so the customer can easily locate the specific charge dates requested."
+      }
+    },
+    {
+      "id": "bug-report",
+      "subject": "Attachments not uploading",
+      "status": "ok",
+      "sentiment": "Negative",
+      "urgency": "High",
+      "generatedReply": "Hi,\n\nI am sorry to hear that this issue is blocking your team, and I understand how frustrating it is when attachments fail repeatedly.\n\nSince the PDF upload is failing partway through at 90% across different browsers (Chrome and Firefox), this is usually a network issue rather than a file or browser problem. Please try testing this on a different network or temporarily disabling any VPN to see if the upload completes.\n\nIf the PDF is under 25MB and the issue persists on a different network, please let us know the exact file size and format so we can investigate further right here in this conversation.\n\nBest regards,\nCustomer Support",
+      "scores": {
+        "toneEmpathy": 8,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 8,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.5,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply directly addresses the specific upload failure at 90%, shows good empathy for the blocking issue, and correctly applies troubleshooting guidance from the knowledge base regarding network/VPN issues and file size limits.",
+        "improvements": "The reply is already strong, well-grounded, and effectively handles the user's situation with no mandatory improvements needed.",
+        "topSuggestion": "Send as-is, as it accurately applies the knowledge base guidance and maintains an appropriate, helpful tone."
+      }
+    },
+    {
+      "id": "feature-request",
+      "subject": "Can we get dark mode?",
+      "status": "ok",
+      "sentiment": "Positive",
+      "urgency": "Low",
+      "generatedReply": "Hi there,\n\nThank you so much for the kind words—we're thrilled to hear you're loving the product so far!\n\nThat is a fantastic suggestion about adding a dark mode for the inbox view, especially for teams working late. I completely understand how a bright white background can be tough on the eyes during evening hours. \n\nWhile dark mode isn't currently available, I've shared your request directly with our product team for consideration in future updates. \n\nPlease let us know if there's anything else we can help you with!\n\nBest regards,\nCustomer Support",
+      "scores": {
+        "toneEmpathy": 8,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 8,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.5,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply warmly acknowledges the customer's positive sentiment and directly addresses their feature request in a polite, professional manner.",
+        "improvements": "No meaningful improvements are needed; the response is accurate, empathetic, and fully grounded.",
+        "topSuggestion": "None, the reply is ready to send as-is."
+      }
+    },
+    {
+      "id": "angry-escalation",
+      "subject": "This is the third time I'm writing about this",
+      "status": "ok",
+      "sentiment": "Negative",
+      "urgency": "High",
+      "generatedReply": "Hi,\n\nI am so sorry for the delay in getting back to you, and I completely understand your frustration with your shared inbox not syncing since yesterday, especially given your urgency today.\n\nTo get this resolved for you right away, please first check Settings > Integrations in your account to confirm the email connection still shows \"Connected.\" Integrations occasionally need to be reauthorized after the email provider revokes access, which is very common after a password change on the connected mailbox. (Please note that new emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior.)\n\nIf the connection shows as disconnected or reauthorizing doesn't resolve the sync issue, please let me know the exact error message if one appears, the browser and OS you are using, and roughly when the issue started so we can get this sorted out for you immediately.\n\nBest regards,\nCustomer Support",
+      "scores": {
+        "toneEmpathy": 9,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 8,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.6,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply immediately addresses the customer's frustration with strong empathy and accurately pulls troubleshooting steps directly from the knowledge base.",
+        "improvements": "It could more directly address the cancellation threat or urgency timeline, though the technical troubleshooting steps are spot on.",
+        "topSuggestion": "Ensure all technical troubleshooting steps from the knowledge base are included, which the current draft already does well."
+      }
+    },
+    {
+      "id": "positive-feedback",
+      "subject": "Just wanted to say thanks",
+      "status": "ok",
+      "sentiment": "Positive",
+      "urgency": "Low",
+      "generatedReply": "Hi there,\n\nThank you so much for the kind words! We are thrilled to hear that the automation rules are helping save your team hours every day.\n\nIf you ever need anything else as your team continues to grow, just reply right here to let us know. Have a wonderful day!\n\nBest regards,\nCustomer Support Team",
+      "scores": {
+        "toneEmpathy": 9,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 8,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.6,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply warmly acknowledges the positive feedback, matches the customer's upbeat sentiment, and remains concise without being overly brief.",
+        "improvements": "No meaningful improvements are needed as this was a praise message rather than a support ticket, and the reply handled it gracefully.",
+        "topSuggestion": "Send as-is."
+      }
+    },
+    {
+      "id": "refund-request",
+      "subject": "Please cancel and refund my last payment",
+      "status": "ok",
+      "sentiment": "Negative",
+      "urgency": "Medium",
+      "generatedReply": "Hello,\n\nI am sorry to hear that you were charged for this month after deciding to cancel last week, and I understand your frustration.\n\nIf you were charged again after cancelling (for example, a renewal that processed moments before you cancelled), that charge is refunded automatically within 5 business days, and you do not need to take any further action. However, if the charge occurred separately from your cancellation timing, please reply to this message with your account email and the date of the charge you are disputing so we can look into this for you right away.\n\nMost requests are resolved within 1 business day, and approved refunds are returned to the original payment method within 5-10 business days, depending on your bank.\n\nBest regards,\nCustomer Support",
+      "scores": {
+        "toneEmpathy": 8,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 8,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.5,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply directly addresses both possible cancellation timing scenarios using the exact knowledge base policies and provides a warm, empathetic opening.",
+        "improvements": "The agent could have asked for the account email and charge date proactively if the charge was separate, but the conditional guidance covers the necessary next steps.",
+        "topSuggestion": "The reply is strong and sendable as-is; no major changes are required."
+      }
+    },
+    {
+      "id": "account-locked",
+      "subject": "Locked out of my account",
+      "status": "ok",
+      "sentiment": "Negative",
+      "urgency": "High",
+      "generatedReply": "I am so sorry for the frustration this is causing, especially with your whole team blocked and needing access today. Let's get this resolved for you right now.\n\nSince your account may be temporarily locked due to repeated attempts (accounts lock for 30 minutes after 5 failed attempts), the fastest way to bypass this lockout and regain access immediately is to use the \"Forgot password\" option on the login page to reset your credentials right away.\n\nTo ensure we get this working on the first try, please confirm:\n1. Are you using the exact email address your account was created with?\n2. If your company uses Single Sign-On (SSO), are you logging in through your company's SSO portal instead of the regular email/password form?\n\nPlease reply directly to this message with those details or let me know if you are still running into trouble after doing a fresh password reset, and we will get you sorted out immediately.\n\nBest regards,\nCustomer Support Team",
+      "scores": {
+        "toneEmpathy": 9,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 7,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 8.4,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply demonstrates great empathy for the team's lockout situation and accurately incorporates troubleshooting steps and lockout policies directly from the knowledge base.",
+        "improvements": "The customer stated they already reset their password twice without success, yet the reply suggests resetting the password again without addressing why the previous attempts failed or providing alternative troubleshooting steps like checking the email address or trying an incognito window.",
+        "topSuggestion": "Acknowledge that they already tried resetting the password twice, and guide them through the other knowledge base steps such as confirming the exact account email or checking for SSO."
+      }
+    },
+    {
+      "id": "neutral-inquiry",
+      "subject": "Question about plan limits",
+      "status": "ok",
+      "sentiment": "Neutral",
+      "urgency": "Low",
+      "generatedReply": "Hi,\n\nThanks for reaching out to compare our plans!\n\nRegarding your question about the team plan, our Pro plan (which is our most popular plan at $29/month) includes up to 5 user seats, unlimited tickets, a shared inbox with automation rules, and priority support with same-day response.\n\nIf your team grows beyond your plan's seat limit, you'll be prompted to upgrade before adding the next user. Removing a user frees up a seat immediately.\n\nPlease let me know if you have any other questions as you compare your options.\n\nBest regards,\nCustomer Support",
+      "scores": {
+        "toneEmpathy": 8,
+        "relevance": 8,
+        "clarity": 8,
+        "completeness": 5,
+        "professionalism": 8,
+        "groundedness": 10
+      },
+      "overallScore": 6.5,
+      "riskFlags": [
+        {
+          "type": "Ignored customer's question",
+          "explanation": "The reply fails to answer the customer's specific question about the maximum number of shared inboxes on the team plan."
+        }
+      ],
+      "rationale": {
+        "strengths": "The reply uses accurate information from the knowledge base regarding the Pro plan features and seat limit policies.",
+        "improvements": "The customer asked specifically about the maximum number of shared inboxes on the team plan, but the reply only discusses user seats and general shared inbox inclusion without specifying a numeric limit.",
+        "topSuggestion": "Clarify the shared inbox limit on the team plan if known, or acknowledge that the knowledge base specifies user seat limits rather than shared inbox limits."
+      }
+    },
+    {
+      "id": "urgent-outage",
+      "subject": "Everything is down — need help ASAP",
+      "status": "ok",
+      "sentiment": "Negative",
+      "urgency": "High",
+      "generatedReply": "Hello,\n\nI completely understand how stressful it is to have your shared inbox down while customers are piling up, and I want to help you get this resolved as quickly as possible.\n\nFirst, please check Settings > Integrations to confirm that the email connection still shows \"Connected\". Integrations occasionally need to be reauthorized after the email provider revokes access, which is very common after a password change on the connected mailbox. (Please note that new emails can also take up to 15 minutes to appear during normal sync delay.)\n\nIf the connection shows as connected and the delay has passed, please let me know:\n- The exact error message, if one appears\n- The browser and operating system you are using\n- Roughly when this issue started\n\nSimply reply directly to this message with those details so we can investigate further right away.\n\nBest regards,\nCustomer Support Team",
+      "scores": {
+        "toneEmpathy": 9,
+        "relevance": 9,
+        "clarity": 9,
+        "completeness": 9,
+        "professionalism": 9,
+        "groundedness": 10
+      },
+      "overallScore": 9.3,
+      "riskFlags": [],
+      "rationale": {
+        "strengths": "The reply demonstrates strong empathy for the high-urgency situation and correctly applies troubleshooting steps directly from the knowledge base, anticipating follow-up details by asking for error messages, browser/OS, and start time.",
+        "improvements": "The reply is exceptionally well-aligned with the knowledge base and customer situation, leaving virtually no room for improvement.",
+        "topSuggestion": "None, the reply is solid and ready to send as-is."
+      }
+    }
+  ]
+}

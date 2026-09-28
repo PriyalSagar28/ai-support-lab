@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "evaluate:batch": "tsx scripts/evaluate-batch.ts"
+    "evaluate:batch": "tsx scripts/evaluate-batch.ts",
+    "benchmark:evaluator": "tsx scripts/benchmark-evaluator.ts",
+    "index:knowledge": "tsx scripts/index-knowledge.ts",
+    "test": "tsx --test tests/unit/*.test.ts",
+    "test:live": "tsx --env-file-if-exists=.env.local --test tests/live/*.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.23.0",

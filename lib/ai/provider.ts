@@ -388,7 +388,16 @@ function mockEvaluate(prompt: string): string {
       ? `Remove or verify the claim that triggered "${riskFlags[0].type}" before this reply is sent.`
       : "Add one concrete, specific detail tied to the customer's issue.";
 
-  return JSON.stringify({ scores, strengths, improvements, topSuggestion, riskFlags });
+  // The mock can't split an email into distinct questions, so it reports a
+  // single "main request" whose status follows the same overlap heuristic.
+  const customerQuestions = [
+    {
+      question: "The customer's main request",
+      status: ignoredQuestion ? "unanswered" : overlap < 0.3 ? "partly answered" : "answered",
+    },
+  ];
+
+  return JSON.stringify({ customerQuestions, strengths, improvements, topSuggestion, scores, riskFlags });
 }
 
 const mockProvider: AIProvider = {
