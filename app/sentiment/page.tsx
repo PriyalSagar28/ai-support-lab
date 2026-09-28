@@ -42,7 +42,7 @@ export default function SentimentPage() {
   return (
     <div className="page">
       <PageHeader
-        phase="Phase 2"
+        phase="Individual tool"
         title="Sentiment analysis"
         description="Detect the customer's sentiment (positive, neutral, negative) and urgency (low, medium, high) so tickets can be triaged automatically. Powered by Google Gemini via the same provider abstraction as categorization (a mock provider is also available for offline demos)."
       />

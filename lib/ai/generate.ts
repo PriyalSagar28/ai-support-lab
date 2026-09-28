@@ -1,31 +1,81 @@
 // Phase 3: AI response generation.
 //
 // Generates a suggested reply to a customer email, informed by the
-// sentiment/urgency signals from Phase 2 (lib/ai/sentiment.ts) rather than
-// guessing tone from scratch. Same provider-agnostic shape as the other
-// modules: build a prompt, call getProvider(), validate the response.
+// sentiment/urgency signals from Phase 2 (lib/ai/sentiment.ts) and, since
+// the RAG knowledge layer was added (lib/ai/knowledge/), by the most
+// relevant company knowledge-base excerpts for this email. Same
+// provider-agnostic shape as the other modules: build a prompt, call
+// getProvider(), validate the response.
 
-import { getProvider } from "./provider";
+import { getProvider, type AIProvider } from "./provider";
 import { analyzeSentiment, type Sentiment, type Urgency } from "./sentiment";
+import { searchKnowledge } from "./knowledge/retrieve";
+import { formatKnowledgeContext } from "./knowledge/format";
+import { checkSupportScope, type SupportScopeDecision } from "./support-scope";
+import type { RetrievedChunk } from "./knowledge/types";
 
 export type GenerateResult = {
   reply: string;
   sentiment: Sentiment;
   urgency: Urgency;
+  // The exact chunks retrieved for this reply, so a caller (the pipeline
+  // page, the batch eval script) can hand the SAME chunks to evaluateReply()
+  // instead of it re-retrieving — the evaluator must judge groundedness
+  // against what the generator actually saw, not a fresh, possibly
+  // different, retrieval.
+  retrievedChunks: RetrievedChunk[];
 };
 
-function buildPrompt(email: string, sentiment: Sentiment, urgency: Urgency): string {
-  return `You are a customer support agent drafting a reply to a customer email.
+// Replaces the knowledge section, and adds reply rules, when the support-scope
+// guard judged the email to be about something other than our product. In
+// scope, the prompt is exactly what it was before the guard existed.
+const OUT_OF_SCOPE_KNOWLEDGE = `Knowledge base: not consulted. This email was assessed as not being about our company's own products or services, so none of our company knowledge applies to it.`;
+
+const OUT_OF_SCOPE_RULES = `
+This request is outside what our support team handles — it is about another company's product or service, or a general question unrelated to our company. These instructions override any conflicting instruction above. In your reply:
+- Politely explain that this support team can only help with questions about our own product, the customer's account with us, billing and related services
+- Do NOT answer the unrelated question from general knowledge, and do NOT state prices, plans, policies or other facts about any other company or topic
+- Do NOT mention or apply our company's plans, prices or policies as if they answered this request
+- Do NOT claim to have looked anything up, and do NOT offer information, tools, referrals or follow-up you cannot actually provide
+- Invite the customer to reply if they have a question about their account or our product
+- Keep it brief, friendly and respectful
+`;
+
+function buildPrompt(
+  email: string,
+  sentiment: Sentiment,
+  urgency: Urgency,
+  retrievedChunks: RetrievedChunk[],
+  inScope: boolean = true
+): string {
+  const knowledgeSection = inScope
+    ? `Relevant knowledge base excerpts (retrieved for this email):
+${formatKnowledgeContext(retrievedChunks)}
+end of knowledge base excerpts`
+    : OUT_OF_SCOPE_KNOWLEDGE;
+
+  return `You are a customer support agent replying directly to a customer's email. The customer has already contacted support by sending this email — your reply IS the support team's response, sent in this same conversation.
 
 Detected customer sentiment: ${sentiment}
 Detected urgency: ${urgency}
 
-Write a professional, empathetic, and concise reply that:
-- Directly addresses the issue described in the email
-- Uses a tone appropriate for a ${sentiment.toLowerCase()} sentiment and ${urgency.toLowerCase()} urgency situation
-- Does not invent specific facts (refund amounts, dates, ticket numbers) that aren't in the email
-- Signs off politely
+${knowledgeSection}
 
+Before writing, work out (silently — do not include this analysis in the output) exactly what the customer is asking for or needs, including every distinct question they asked, and what about their specific situation is already known from the email.
+
+Then write a reply that:
+- Answers the customer's actual request and each of their questions directly, starting with what matters most to them
+- Focuses on the customer's specific situation rather than a generic policy explanation — apply the policy to their case where the email gives enough detail to do so
+- Treats the knowledge base excerpts above as the source of truth for any company-specific information (policies, prices, refund rules, timelines, eligibility, account or billing procedures, etc.)
+- Includes the specific policy details from the excerpts that help answer the customer's questions, and leaves out excerpt content that is not relevant to this customer's request
+- Does NOT invent company policies, prices, refund rules or amounts, dates, timelines, eligibility decisions, or any other company-specific fact that isn't supported by the excerpts above or stated directly in the customer's email
+- Does NOT confirm or deny eligibility, approve a refund, or promise an outcome unless the excerpts and the email together clearly support it; if it depends on something the email doesn't say, explain what it depends on
+- Never tells the customer to contact, email, call, or reach out to support, open a ticket, or submit a request elsewhere — they are already talking to support. If a knowledge base excerpt describes how to contact support or request something, apply it to this conversation instead of repeating it as an instruction
+- If information is needed to proceed (for example an account email, charge date, or order details), asks the customer for it directly, so they can simply reply to this message with it
+- If the excerpts don't contain enough information to answer a company-specific question, says so honestly and says the team will follow up in this conversation, instead of guessing
+- Uses a tone appropriate for a ${sentiment.toLowerCase()} sentiment and ${urgency.toLowerCase()} urgency situation: professional, empathetic, concise, and actionable, with a clear next step
+- Signs off politely
+${inScope ? "" : OUT_OF_SCOPE_RULES}
 Respond with ONLY a single JSON object (no extra text, no markdown fences) in exactly this shape:
 {"reply": "<the full reply text, using \\n for line breaks>"}
 
@@ -63,6 +113,23 @@ function parseGenerateResponse(raw: string): { reply: string } {
 }
 
 /**
+ * Decides whether the knowledge base may ground this reply, then retrieves.
+ * Order matters: the support-scope guard runs first, so an out-of-scope email
+ * never retrieves (and never passes on) chunks that merely look similar.
+ * In-scope emails go through the existing similarity-threshold retrieval
+ * unchanged. `search` is injectable for tests.
+ */
+export async function retrieveGroundingKnowledge(
+  email: string,
+  provider: AIProvider,
+  search: (query: string) => Promise<RetrievedChunk[]> = searchKnowledge
+): Promise<{ scope: SupportScopeDecision; retrievedChunks: RetrievedChunk[] }> {
+  const scope = await checkSupportScope(email, provider);
+  const retrievedChunks = scope.inScope ? await search(email) : [];
+  return { scope, retrievedChunks };
+}
+
+/**
  * `precomputed` lets a caller that already ran sentiment analysis (the
  * Phase 5 pipeline, which computes it once and reuses it here) skip a
  * redundant analyzeSentiment() call. Omit it to keep the original Phase 3
@@ -74,8 +141,27 @@ export async function generateReply(
 ): Promise<GenerateResult> {
   const provider = getProvider();
   const { sentiment, urgency } = precomputed ?? (await analyzeSentiment(email));
-  const prompt = buildPrompt(email, sentiment, urgency);
+
+  // Retrieval uses the full customer email as the query (no separate query
+  // rewriting step) and the knowledge layer's own default top-K. Retrieval
+  // requires GEMINI_API_KEY (there is no mock embedding provider), so the
+  // one case where it's deliberately skipped is the keyless mock demo
+  // (AI_PROVIDER=mock, no key) — that keeps working exactly as it did
+  // before RAG was added, just without grounding context. In every other
+  // case a retrieval failure (a KnowledgeRetrievalError from
+  // searchKnowledge) propagates: drafting a company-support reply without
+  // the knowledge base would look like a grounded reply but not be one.
+  //
+  // Before retrieving, the support-scope guard (support-scope.ts) checks the
+  // email is about our product at all; if not, nothing is retrieved and the
+  // prompt switches to a polite out-of-scope reply.
+  const skipRetrieval = provider.name === "mock" && !process.env.GEMINI_API_KEY;
+  const { scope, retrievedChunks } = skipRetrieval
+    ? { scope: null, retrievedChunks: [] as RetrievedChunk[] }
+    : await retrieveGroundingKnowledge(email, provider);
+
+  const prompt = buildPrompt(email, sentiment, urgency, retrievedChunks, scope?.inScope ?? true);
   const raw = await provider.complete(prompt);
   const { reply } = parseGenerateResponse(raw);
-  return { reply, sentiment, urgency };
+  return { reply, sentiment, urgency, retrievedChunks };
 }

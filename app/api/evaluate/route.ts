@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { evaluateReply } from "@/lib/ai/evaluate";
 import { SENTIMENTS, URGENCIES, type Sentiment, type Urgency } from "@/lib/ai/sentiment-labels";
+import type { RetrievedChunk } from "@/lib/ai/knowledge/types";
 
 function isSentiment(value: unknown): value is Sentiment {
   return typeof value === "string" && (SENTIMENTS as readonly string[]).includes(value);
@@ -8,6 +9,18 @@ function isSentiment(value: unknown): value is Sentiment {
 
 function isUrgency(value: unknown): value is Urgency {
   return typeof value === "string" && (URGENCIES as readonly string[]).includes(value);
+}
+
+function isRetrievedChunk(value: unknown): value is RetrievedChunk {
+  if (typeof value !== "object" || value === null) return false;
+  const { id, source, title, text, score } = value as Record<string, unknown>;
+  return (
+    typeof id === "string" &&
+    typeof source === "string" &&
+    typeof title === "string" &&
+    typeof text === "string" &&
+    typeof score === "number"
+  );
 }
 
 export async function POST(request: Request) {
@@ -48,8 +61,24 @@ export async function POST(request: Request) {
     );
   }
 
+  // Optional: the exact chunks retrieved during generation for this reply
+  // (see GenerateResult.retrievedChunks in lib/ai/generate.ts). Omit it to
+  // fall back to email-only grounding, same as before RAG evaluation was
+  // added — this endpoint never re-runs retrieval itself.
+  const rawRetrievedChunks = (body as { retrievedChunks?: unknown } | null)?.retrievedChunks;
+  let retrievedChunks: RetrievedChunk[] | undefined;
+  if (rawRetrievedChunks !== undefined) {
+    if (!Array.isArray(rawRetrievedChunks) || !rawRetrievedChunks.every(isRetrievedChunk)) {
+      return NextResponse.json(
+        { error: 'Field "retrievedChunks" must be an array of {id, source, title, text, score} objects.' },
+        { status: 400 }
+      );
+    }
+    retrievedChunks = rawRetrievedChunks;
+  }
+
   try {
-    const result = await evaluateReply({ email, reply, sentiment, urgency });
+    const result = await evaluateReply({ email, reply, sentiment, urgency, retrievedChunks });
     return NextResponse.json(result);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";

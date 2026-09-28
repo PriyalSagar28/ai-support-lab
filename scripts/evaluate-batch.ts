@@ -177,6 +177,9 @@ async function evaluateOne(sample: SampleEmail): Promise<ItemResult> {
       reply: generated.reply,
       sentiment: generated.sentiment,
       urgency: generated.urgency,
+      // Same chunks generateReply() just retrieved — evaluate.ts must judge
+      // groundedness against what the model actually saw, not re-retrieve.
+      retrievedChunks: generated.retrievedChunks,
     });
 
     return {
@@ -209,9 +212,11 @@ async function evaluateOne(sample: SampleEmail): Promise<ItemResult> {
   }
 }
 
-// Mean of overallScore across successful items only — the same aggregation
-// principle lib/ai/evaluate.ts already uses for a single reply's six
-// dimensions (a plain mean), just one level up: mean of means. Failed items
+// Plain mean of overallScore across successful items only. Each item's
+// overallScore is already computed by lib/ai/evaluate.ts's
+// computeOverallScore(): the lowest of the weighted average of its six
+// dimensions, its weakest dimension + 1.5, and the critical (4.9) / major
+// (6.9) risk-flag cap — so no re-weighting or capping happens here. Failed items
 // contribute no score in either direction; they're surfaced separately via
 // failureCount instead of being averaged in as 0 (which would fabricate a
 // data point that was never actually scored).
@@ -325,7 +330,7 @@ async function main() {
     aggregateOverallScore,
     aggregateDimensionScores,
     aggregateMethod:
-      "aggregateOverallScore = mean of per-response overallScore across all successfully-evaluated emails accumulated so far (failures and not-yet-attempted items excluded, never counted as 0). aggregateDimensionScores = the same mean applied per dimension. overallScore itself is computed by lib/ai/evaluate.ts: mean of the six dimension scores, capped at 4.9 if a critical risk flag (unsupported refund promise, unverified fix claim, or invented policy/fact) is present.",
+      "aggregateOverallScore = mean of per-response overallScore across all successfully-evaluated emails accumulated so far (failures and not-yet-attempted items excluded, never counted as 0). aggregateDimensionScores = the same mean applied per dimension. overallScore itself is computed by lib/ai/evaluate.ts as the lowest of: a weighted average of the six dimensions (relevance 25%, groundedness 25%, completeness 20%, toneEmpathy/clarity/professionalism 10% each); the weakest dimension + 1.5; and a risk-flag cap of 4.9 for a critical flag (unsupported refund promise, unverified fix claim, invented policy/fact) or 6.9 for a major flag (ignored customer's question, inappropriate tone).",
     results,
   };
 

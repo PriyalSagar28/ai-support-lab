@@ -38,5 +38,5 @@ export const DIMENSION_DESCRIPTIONS: Record<ScoreDimension, string> = {
   completeness: "whether the reply covers everything the customer asked",
   professionalism: "polished, appropriate business tone",
   groundedness:
-    "avoids inventing facts, promises, policies, or timelines not present in the email (10 = fully grounded, 1 = fabricates freely)",
+    "avoids inventing facts, promises, policies, or timelines not supported by the customer email or the retrieved knowledge base excerpts (10 = fully grounded, 1 = fabricates freely)",
 };

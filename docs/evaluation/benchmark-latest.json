@@ -1,0 +1,2164 @@
+{
+  "runAt": "2026-09-28T10:21:18.832Z",
+  "provider": "gemini",
+  "runsPerCase": 3,
+  "passRule": "A case passes when every 'must' check passes. Flag checks must hold on every run; other checks on at least ceil(2/3 of runs). Errored runs count as failures. 'ideal' checks are reported but never fail a case.",
+  "backingLegend": {
+    "code": "Enforced deterministically by lib/ai/evaluate.ts once the model emits the upstream signal (flag or 'unanswered' status). Failure = model missed the signal, or a code regression.",
+    "prompt": "Depends only on the model following the prompt rubric. Failure = evaluator judgment problem."
+  },
+  "summary": {
+    "cases": 12,
+    "passed": 12,
+    "failed": 0,
+    "errored": 0,
+    "mustChecks": {
+      "code": {
+        "passed": 15,
+        "total": 15
+      },
+      "prompt": {
+        "passed": 47,
+        "total": 47
+      }
+    },
+    "idealChecks": {
+      "passed": 8,
+      "total": 8
+    }
+  },
+  "cases": [
+    {
+      "id": "BM-01",
+      "failureMode": "None — genuinely good grounded reply",
+      "expectedSummary": "All 3 questions answered, no flags, overall 8.0–9.2 (Ready to send), groundedness >= 8.",
+      "status": "pass",
+      "overallScores": [
+        9.1,
+        9.1,
+        9.1
+      ],
+      "checks": [
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact, Ignored customer's question, Inappropriate tone",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply is correct, complete and well-toned; any flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "no question is unanswered or partly answered",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "All three questions are answered explicitly.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "groundedness >= 8",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Every claim matches the retrieved chunks.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall >= 8",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "A sendable, complete, grounded reply.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 9.2",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Rubric reserves 10 for rare exemplary replies; above 9.2 suggests inflation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Ready to send]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from overall >= 8.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 9.1,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 9,
+              "clarity": 9,
+              "completeness": 9,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly answers all three customer questions using the exact knowledge base policies and helpfully anticipates the user seat limit difference on the Pro plan.",
+            "improvements": "The reply is already comprehensive and well-structured, so no significant improvements are needed.",
+            "topSuggestion": "Send the reply as-is.",
+            "riskFlags": [],
+            "overallScore": 9.1
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 9.1,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 9,
+              "clarity": 9,
+              "completeness": 9,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly answers all three customer questions accurately using the knowledge base and adds helpful proactive context about user seat limits.",
+            "improvements": "The reply is already strong, well-structured, and fully grounded, leaving no significant improvements needed.",
+            "topSuggestion": "None required; the reply is ready to send as-is.",
+            "riskFlags": [],
+            "overallScore": 9.1
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 9.1,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 9,
+              "clarity": 9,
+              "completeness": 9,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses all three customer questions with accurate information from the knowledge base and helpfully anticipates the user seat limit difference.",
+            "improvements": "The reply is exceptionally clear, structured, and accurate, leaving no meaningful improvements to be made.",
+            "topSuggestion": "None, the reply is ready to send as-is.",
+            "riskFlags": [],
+            "overallScore": 9.1
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-02",
+      "failureMode": "Grounded but incomplete (partly answered)",
+      "expectedSummary": "At least one question 'partly answered' (acceptable variant: SSO marked 'unanswered' + ignored flag), completeness <= 7, no critical flags, overall 5.5–7.9 (Needs revision).",
+      "status": "pass",
+      "overallScores": [
+        7.5,
+        6.5,
+        7.5
+      ],
+      "checks": [
+        {
+          "description": "some question is partly answered or unanswered",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The SSO answer ('may work differently') dodges the question.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "some question is partly answered",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "Ideal classification is 'partly answered', not 'unanswered'.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "completeness <= 7",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Omits keeping features until the period ends and gives a vague SSO answer.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply makes no fabricated claim; any critical flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "overall >= 5.5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Everything stated is true; this is a polish gap, not a failure.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 7.9",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Incomplete replies must not read as sendable.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Needs revision]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from 5.5–7.4.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 7.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "partly answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 6,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply correctly answers the questions regarding the downgrade timing and the lack of a partial refund based on the knowledge base.",
+            "improvements": "The response to the SSO question is vague (\"may work differently\") instead of directly confirming that SSO is a Business feature not included in Pro, meaning they will lose it.",
+            "topSuggestion": "Explicitly state whether they will lose SSO by noting that SSO is a Business feature not available on the Pro plan.",
+            "riskFlags": [],
+            "overallScore": 7.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 6.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "partly answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 7,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 5,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply correctly addresses the downgrade timing and refund policy according to the knowledge base.",
+            "improvements": "The answer regarding SSO is vague (\"may work differently\") instead of directly confirming that SSO is a Business feature not included in Pro, and the tone is slightly abrupt.",
+            "topSuggestion": "Explicitly confirm that SSO will be lost because it is a Business-only feature, and warm up the opening sentence.",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The question about whether they will lose SSO was only partly answered with a vague statement rather than a direct confirmation."
+              }
+            ],
+            "overallScore": 6.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 7.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "partly answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 7,
+              "relevance": 8,
+              "clarity": 7,
+              "completeness": 6,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply correctly addresses the downgrade timeline and refund policy using the knowledge base.",
+            "improvements": "The reply is too vague about SSO, stating only that it \"may work differently\" rather than clearly confirming that Business includes SSO while Pro does not.",
+            "topSuggestion": "Explicitly confirm that moving to Pro means losing SSO, since Business includes SSO and Pro does not.",
+            "riskFlags": [],
+            "overallScore": 7.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-03",
+      "failureMode": "Grounded but irrelevant/generic",
+      "expectedSummary": "Relevance <= 5, ignored-question flag likely (groundedness >= 7 and no critical flags are informational), overall <= 6.5 (not Ready).",
+      "status": "pass",
+      "overallScores": [
+        4.5,
+        4.5,
+        5.5
+      ],
+      "checks": [
+        {
+          "description": "relevance <= 5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Prompt hard limit: generic answer that ignores the customer's situation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "groundedness >= 7",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "All statements are supported by retrieved chunks. Informational: the evaluator may treat generic advice as a real policy applied to the wrong situation, which the prompt caps at groundedness 6.",
+          "passedRuns": 2,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "No fabricated claim. Informational: the evaluator sometimes flags off-topic real advice as 'Invented policy or fact'.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "flag present: Ignored customer's question",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "The actual sync problem is never addressed.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "overall <= 6.5",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code: overall <= weakest dimension + 1.5, so relevance <= 5 implies <= 6.5.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Needs revision | Do not send as-is]",
+          "backing": "code",
+          "severity": "must",
+          "why": "Follows from overall <= 6.5.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox that hasn't pulled in any new emails since yesterday.",
+                "status": "unanswered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 7,
+              "relevance": 4,
+              "clarity": 7,
+              "completeness": 3,
+              "professionalism": 8,
+              "groundedness": 6
+            },
+            "strengths": "The reply maintains a polite, professional tone and is clear in its presentation.",
+            "improvements": "The agent completely missed the actual issue (shared inbox not syncing) and instead provided troubleshooting steps for application crashes and general error collection. The agent should have addressed the shared inbox sync settings and the 15-minute sync delay mentioned in the knowledge base.",
+            "topSuggestion": "Replace the irrelevant troubleshooting steps with the correct ones for a shared inbox not syncing (checking Settings > Integrations for the 'Connected' status and explaining the normal sync delay).",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply gave troubleshooting steps for app crashes instead of addressing the shared inbox sync issue."
+              }
+            ],
+            "overallScore": 4.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox not pulling in new emails since yesterday.",
+                "status": "unanswered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 5,
+              "relevance": 4,
+              "clarity": 6,
+              "completeness": 3,
+              "professionalism": 7,
+              "groundedness": 7
+            },
+            "strengths": "The reply maintains a polite, professional business tone.",
+            "improvements": "The reply completely misses the actual issue (shared inbox not syncing) by providing troubleshooting steps for app crashes and general bug reporting, and it lacks empathy for an urgent, repeat inquiry.",
+            "topSuggestion": "Replace the troubleshooting steps with the correct knowledge base solution for shared inboxes not syncing (checking Settings > Integrations for connection status) and acknowledge the frustration of a repeat contact.",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply addresses browser crashes and general reporting steps instead of the customer's shared inbox syncing issue."
+              }
+            ],
+            "overallScore": 4.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 5.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox issue where new emails aren't pulling in.",
+                "status": "unanswered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 6,
+              "relevance": 4,
+              "clarity": 8,
+              "completeness": 4,
+              "professionalism": 7,
+              "groundedness": 7
+            },
+            "strengths": "The reply is polite and clearly structured.",
+            "improvements": "The agent provided troubleshooting steps for the wrong issue (application freezing instead of shared inbox syncing), completely ignoring the customer's actual problem and referring to irrelevant knowledge base instructions.",
+            "topSuggestion": "Replace the troubleshooting steps with the correct ones for shared inbox syncing (checking Settings > Integrations for connection status) and acknowledge the customer's frustration as this is their third time writing.",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply fails to address the shared inbox syncing issue and instead gives steps for app freezing."
+              }
+            ],
+            "overallScore": 5.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-04",
+      "failureMode": "Ignored customer's question",
+      "expectedSummary": "Refund question 'unanswered', 'Ignored customer's question' flag, completeness <= 5, overall 5.0–6.9, no critical flags.",
+      "status": "pass",
+      "overallScores": [
+        5.5,
+        5.5,
+        5.5
+      ],
+      "checks": [
+        {
+          "description": "some question is unanswered",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The refund request is never mentioned.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "flag present: Ignored customer's question",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code adds this flag whenever any question is 'unanswered'.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "completeness <= 5",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps completeness at 5 with the ignored-question flag.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 6.9",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps overall at 6.9 for a major flag.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply makes no fabricated claim; any critical flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "overall >= 5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The parts it does answer are correct and well written.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Needs revision]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from 5.0–6.9.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 5.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge ($278.40 annual renewal six weeks ago)",
+                "status": "unanswered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 4,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply clearly explains how to cancel the account and accurately details what happens to customer data afterward, maintaining a polite and professional tone.",
+            "improvements": "The agent completely missed the customer's explicit request for a refund of the annual renewal charge, which was outside the 14-day eligibility window.",
+            "topSuggestion": "Address the refund request directly by explaining that the charge is outside the 14-day refund window as per company policy.",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply failed to address the customer's request for a refund on their annual renewal charge."
+              }
+            ],
+            "overallScore": 5.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 5.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund my annual renewal charge of $278.40",
+                "status": "unanswered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 6,
+              "clarity": 8,
+              "completeness": 4,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply accurately explains cancellation instructions and data retention rules based on the knowledge base.",
+            "improvements": "The agent completely ignored the customer's request for a refund on their annual renewal, which was charged six weeks ago.",
+            "topSuggestion": "Address the refund request directly by informing the customer that the charge is outside the 14-day refund window.",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply fails to address the customer's explicit request for a refund of their annual renewal charge."
+              }
+            ],
+            "overallScore": 5.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 5.5,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund my annual renewal charge of $278.40",
+                "status": "unanswered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 4,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply accurately explains cancellation and data retention policies based on the knowledge base.",
+            "improvements": "The agent completely missed addressing the customer's refund request for the $278.40 renewal charge, which falls outside the 14-day policy window.",
+            "topSuggestion": "Address the refund request directly by explaining that the charge is non-refundable because it occurred six weeks ago, outside the 14-day policy window.",
+            "riskFlags": [
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply completely fails to address the customer's request for a refund on their annual renewal charge."
+              }
+            ],
+            "overallScore": 5.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-05",
+      "failureMode": "Invented company policy",
+      "expectedSummary": "'Invented policy or fact' (likely also 'Unsupported refund promise'), groundedness <= 4, overall <= 4.9 (Do not send).",
+      "status": "pass",
+      "overallScores": [
+        2.5,
+        3.5,
+        4.5
+      ],
+      "checks": [
+        {
+          "description": "flag present: Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The 50%/60-day courtesy policy exists in neither source.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "flag present: Unsupported refund promise",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "It also promises a refund the policy doesn't allow.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "groundedness <= 4",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps groundedness at 4 once a critical flag is raised (invented policy).",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 4.9",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps overall at 4.9 once a critical flag is raised (invented policy).",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Do not send as-is]",
+          "backing": "code",
+          "severity": "must",
+          "why": "Follows from the 4.9 critical-flag cap.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund the annual renewal charge of $278.40",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "partly answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 5,
+              "clarity": 7,
+              "completeness": 5,
+              "professionalism": 5,
+              "groundedness": 1
+            },
+            "strengths": "The reply addresses the data retention question clearly and maintains an empathetic tone regarding the renewal charge.",
+            "improvements": "The reply invents a non-existent 50% partial refund policy for annual plans cancelled within 60 days, which directly contradicts the refund policy knowledge base stating that charges older than 14 days are not refundable.",
+            "topSuggestion": "Remove the invented partial refund policy and correctly apply the 14-day refund window rule, informing the customer that the charge is outside the eligible refund period.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The agent promised a $139.20 partial refund based on an invented 60-day policy not present in the knowledge base."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply cites a non-existent company policy of refunding 50% of annual plans cancelled within 60 days of renewal."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 3.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund the annual renewal charge of $278.40",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "partly answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 6,
+              "clarity": 8,
+              "completeness": 6,
+              "professionalism": 8,
+              "groundedness": 2
+            },
+            "strengths": "The reply addresses the data retention question clearly and maintains an empathetic, polite tone.",
+            "improvements": "The agent hallucinates a 50% partial refund policy for annual plans cancelled within 60 days, which contradicts the knowledge base stating charges older than 14 days are not refundable.",
+            "topSuggestion": "Remove the fabricated partial refund offer and correctly apply the 14-day refund policy, denying the refund for a charge from six weeks ago.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises a 50% refund that is not supported by the knowledge base, which states charges older than 14 days are not refundable."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The agent invents a policy that annual plans cancelled within 60 days qualify for a 50% courtesy refund."
+              }
+            ],
+            "overallScore": 3.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund the annual renewal charge of $278.40",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 3
+            },
+            "strengths": "The reply directly addresses all three parts of the customer's request, providing clear details on cancellation steps, data retention, and a refund.",
+            "improvements": "The reply applies a partial refund policy that is not supported by the knowledge base excerpts, as charges older than 14 days are not refundable and there is no 50% partial refund policy for annual plans within 60 days.",
+            "topSuggestion": "Remove the ungrounded 50% refund offer and correctly apply the refund policy, stating that charges older than 14 days are non-refundable.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises a 50% refund as a courtesy, which is not supported by the knowledge base excerpts since the charge occurred six weeks ago."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply invents a policy that annual plans cancelled within 60 days qualify for a 50% refund."
+              }
+            ],
+            "overallScore": 4.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-06",
+      "failureMode": "Incorrect application of a real policy",
+      "expectedSummary": "Groundedness <= 6; ideally 'Unsupported refund promise' (-> overall <= 4.9). Minimum pass: overall < 7.0. A 7.0–7.9 score with no flag is a documented evaluator weakness (no flag type and no code cap for misapplied policy).",
+      "status": "pass",
+      "overallScores": [
+        4.5,
+        4.5,
+        4.5
+      ],
+      "checks": [
+        {
+          "description": "groundedness <= 6",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Prompt hard limit: real policy applied incorrectly to the customer's situation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 6.9",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Minimum pass: a wrong refund promise must never approach 'Ready to send'.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Needs revision | Do not send as-is]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Must not be 'Ready to send'.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "any flag present: Unsupported refund promise | Invented policy or fact",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "The refund is not supported for this customer's situation.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "overall <= 4.9",
+          "backing": "code",
+          "severity": "ideal",
+          "why": "Would follow from the critical flag above via the code cap.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge ($278.40 charged six weeks ago)",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 5,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 3
+            },
+            "strengths": "The reply addresses all three customer points (refund, cancellation, and data retention), but applies an incorrect refund policy since the charge was six weeks ago, not moments before cancelling.",
+            "improvements": "The agent misapplied the refunds-after-cancellation policy; the charge is actually older than 14 days and not refundable according to the knowledge base.",
+            "topSuggestion": "Correct the refund decision to state that the charge is outside the 14-day refund window and therefore not eligible for a refund.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises a full refund for a charge that occurred six weeks ago, violating the 14-day refund eligibility policy."
+              }
+            ],
+            "overallScore": 4.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund the $278.40 annual renewal charge",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel the account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to data once canceled?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 6,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 3
+            },
+            "strengths": "The reply directly addresses all three customer questions and covers data retention accurately based on the knowledge base.",
+            "improvements": "The agent misapplied the policy regarding the refund eligibility. The customer was charged 6 weeks ago, which exceeds the 14-day refund window, yet the reply incorrectly promised an automatic refund under the post-cancellation policy.",
+            "topSuggestion": "Correct the refund decision to reflect that the charge is non-refundable due to being older than 14 days.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises a refund for a charge that is six weeks old, violating the 14-day refund policy."
+              }
+            ],
+            "overallScore": 4.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge ($278.40)",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 5,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 3
+            },
+            "strengths": "The reply directly addresses all three customer questions, explaining data retention, cancellation instructions, and the refund status clearly.",
+            "improvements": "The agent misapplied the refunds-after-cancellation policy; the customer was charged six weeks ago (outside the 14-day window and not a recent cancellation timing overlap), so the charge is actually non-refundable.",
+            "topSuggestion": "Correct the refund decision to state that the 14-day refund window has passed and the charge is non-refundable, while still providing the cancellation steps and data retention information.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises an automatic refund for a charge that occurred six weeks ago, which violates the 14-day refund policy."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply incorrectly applies the refunds-after-cancellation policy to a charge from six weeks prior."
+              }
+            ],
+            "overallScore": 4.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-07",
+      "failureMode": "None — good grounded refusal",
+      "expectedSummary": "All questions answered, no flags, relevance >= 7, overall 7.5–9.0.",
+      "status": "pass",
+      "overallScores": [
+        8.5,
+        8.5,
+        8.5
+      ],
+      "checks": [
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact, Ignored customer's question, Inappropriate tone",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply is correct, complete and well-toned; any flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "no question is unanswered",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The refund is explicitly declined with the reason — declined is not ignored.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "relevance >= 7",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Pointing to Settings to cancel is the documented procedure, not a generic redirect.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall >= 7.5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Correct, complete, grounded and empathetic.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 9",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Guards against inflation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Ready to send | Needs revision]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from 7.5–9.0.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge ($278.40 annual renewal from six weeks ago)",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses all three customer questions, accurately applies the refund policy timeline, and provides clear instructions on cancellation and data retention.",
+            "improvements": "The tone is appropriate and empathetic, though it could briefly acknowledge that they forgot to cancel before the auto-renewal to make it feel a bit more personalized.",
+            "topSuggestion": "The reply is strong and sendable as-is; no major changes are required.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge ($278.40 annual renewal)",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses all parts of the customer's request, accurately applies the refund policy's 14-day window, and provides clear instructions on cancellation and data retention.",
+            "improvements": "The response is well-written and completely accurate based on the knowledge base; no major improvements are necessary.",
+            "topSuggestion": "None; the reply is ready to send.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Refund my annual renewal charge of $278.40",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses all parts of the customer's request, accurately applies the refund policy based on the 14-day window, and provides clear cancellation instructions and data retention details.",
+            "improvements": "The reply is solid and accurate; no major improvements are necessary.",
+            "topSuggestion": "None required, the draft is sendable as-is.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-08",
+      "failureMode": "Unsupported promise",
+      "expectedSummary": "'Unsupported refund promise' and 'Unverified fix claim', groundedness <= 4, overall <= 4.9 (Do not send).",
+      "status": "pass",
+      "overallScores": [
+        3.5,
+        2.5,
+        2.5
+      ],
+      "checks": [
+        {
+          "description": "flag present: Unsupported refund promise",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Duplicate unverified; 24h contradicts 5-10 business days.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "flag present: Unverified fix claim",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Claims a billing glitch was fixed with no basis.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "groundedness <= 4",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps groundedness at 4 once a critical flag is raised (unsupported promise).",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 4.9",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps overall at 4.9 once a critical flag is raised (unsupported promise).",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Do not send as-is]",
+          "backing": "code",
+          "severity": "must",
+          "why": "Follows from the 4.9 critical-flag cap.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 3.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Can you refund the extra charge?",
+                "status": "unanswered"
+              },
+              {
+                "question": "How long will it take to show up on my card?",
+                "status": "unanswered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 5,
+              "clarity": 8,
+              "completeness": 3,
+              "professionalism": 7,
+              "groundedness": 2
+            },
+            "strengths": "The proposed reply uses a warm and friendly tone and offers a quick turnaround time.",
+            "improvements": "The agent falsely claimed to have processed the refund and fixed a bug, whereas the knowledge base requires the customer to provide charge details first and states that refunds take 5-10 business days.",
+            "topSuggestion": "Ask the customer for the charge date and amount as outlined in the refund policy, and correctly state the processing timeline of 5-10 business days.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises an immediate refund and fixes without checking account history or following the verification process in the knowledge base."
+              },
+              {
+                "type": "Unverified fix claim",
+                "explanation": "The agent claims to have fixed a billing glitch on our end, which is not supported by any knowledge base excerpt."
+              },
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply fails to provide the actual refund process and timeline requested by the customer, instead fabricating an incorrect status."
+              }
+            ],
+            "overallScore": 3.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Can you refund the extra charge?",
+                "status": "partly answered"
+              },
+              {
+                "question": "How long will it take to show up on my card?",
+                "status": "unanswered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 5,
+              "clarity": 8,
+              "completeness": 3,
+              "professionalism": 7,
+              "groundedness": 1
+            },
+            "strengths": "The reply uses a warm and polite tone and attempts to quickly address the customer's frustration.",
+            "improvements": "The agent hallucinates that the refund has already been processed and that a system glitch was fixed, violating the knowledge base policy which requires verifying duplicate charges and outlines a 5-10 business day timeline instead of 24 hours.",
+            "topSuggestion": "Remove the false promises that the refund has already been sent and the glitch fixed, ask the customer for the charge dates and amounts to verify the duplicate per the knowledge base, and provide the correct 5-10 business day timeline.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply claims the refund has already been processed without following the knowledge base verification process."
+              },
+              {
+                "type": "Unverified fix claim",
+                "explanation": "The agent claims they fixed the billing glitch, which is not supported by the knowledge base or company tools."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply states the refund will show up within 24 hours, whereas the knowledge base states 5-10 business days."
+              },
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply fails to correctly answer the timeline question, providing an incorrect timeframe instead."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Can you refund the extra charge?",
+                "status": "partly answered"
+              },
+              {
+                "question": "How long will it take to show up on my card?",
+                "status": "unanswered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 7,
+              "relevance": 5,
+              "clarity": 8,
+              "completeness": 4,
+              "professionalism": 7,
+              "groundedness": 1
+            },
+            "strengths": "The reply is polite and expresses immediate empathy regarding the double charge.",
+            "improvements": "The agent hallucinates that a refund was already processed and a billing glitch was fixed, without asking for the required charge dates and amounts. It also misstates the refund timeline (claiming 24 hours instead of the 5-10 business days noted in the knowledge base).",
+            "topSuggestion": "Remove the false claims about the refund being processed and the bug being fixed, ask the customer for the charge dates and amounts to verify the duplicate, and provide the correct timeline of 5-10 business days.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply claims a refund has already been issued before verifying the duplicate charge against the policy requirements."
+              },
+              {
+                "type": "Unverified fix claim",
+                "explanation": "The agent claims to have fixed a billing glitch on their end, which is unsupported and fabricated."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply states the refund will show up within 24 hours, whereas the knowledge base states 5-10 business days."
+              },
+              {
+                "type": "Ignored customer's question",
+                "explanation": "The reply fails to correctly answer how long the refund takes according to company policy."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-09",
+      "failureMode": "None — missing customer information handled correctly",
+      "expectedSummary": "No flags, completeness >= 7, refund question 'answered' or 'partly answered' (never 'unanswered'), overall 7.5–9.0.",
+      "status": "pass",
+      "overallScores": [
+        8.5,
+        8.5,
+        8.5
+      ],
+      "checks": [
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact, Ignored customer's question, Inappropriate tone",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply is correct, complete and well-toned; any flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "no question is unanswered",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Both questions are addressed; the refund is correctly conditional on verification.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "completeness >= 7",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Asking for policy-required info is the complete answer here.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall >= 7.5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Correct handling of missing information.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 9",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Guards against inflation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Ready to send | Needs revision]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from 7.5–9.0.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Can you refund the extra charge?",
+                "status": "answered"
+              },
+              {
+                "question": "How long will it take to show up on my card?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply accurately explains how to check invoice history, clearly outlines the refund process based on the knowledge base, and addresses both of the customer's questions.",
+            "improvements": "It is well-written and fully grounded, so no major improvements are needed.",
+            "topSuggestion": "The reply is solid and can be sent as-is.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Can you refund the extra charge?",
+                "status": "answered"
+              },
+              {
+                "question": "How long will it take to show up on my card?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply accurately explains how to check invoice history for a duplicate charge, outlines the refund policy clearly, and directly answers both questions about refunds and timelines.",
+            "improvements": "No meaningful improvements are needed; the reply is accurate, empathetic, and fully grounded in the knowledge base.",
+            "topSuggestion": "None required.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Can you refund the extra charge?",
+                "status": "answered"
+              },
+              {
+                "question": "How long will it take to show up on my card?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses both of the customer's questions using exact information from the knowledge base, offering a clear path to verify the duplicate charge and explaining the timeline for the refund.",
+            "improvements": "No meaningful improvements are needed as the reply is completely accurate, empathetic, and fully addresses the customer's concerns.",
+            "topSuggestion": "Send as-is; no changes are required.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-10",
+      "failureMode": "Inappropriate tone",
+      "expectedSummary": "'Inappropriate tone' flag, toneEmpathy <= 3, professionalism <= 4, groundedness >= 7, no critical flags, overall 2.0–5.5.",
+      "status": "pass",
+      "overallScores": [
+        2.5,
+        2.5,
+        2.5
+      ],
+      "checks": [
+        {
+          "description": "flag present: Inappropriate tone",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Dismissive, condescending wording toward an upset customer.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "toneEmpathy <= 3",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "No empathy; actively dismissive.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "professionalism <= 4",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "'This is basic setup' is unprofessional.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "groundedness >= 7",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The technical content matches the sync chunk.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply makes no fabricated claim; any critical flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "overall <= 6.9",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps overall at 6.9 for a major flag.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall >= 2",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The fix itself is correct; tone/professionalism of 1 legitimately pulls overall to 2.5 via the weakest-dimension rule.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 5.5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Weakest-dimension rule with tone <= 3-4 should pull it here.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox not pulling in new emails.",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 1,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 1,
+              "groundedness": 10
+            },
+            "strengths": "The reply correctly uses the troubleshooting steps from the knowledge base to address the inbox syncing issue.",
+            "improvements": "The tone is extremely rude, adversarial, and unprofessional, which will severely damage customer trust.",
+            "topSuggestion": "Rewrite the entire message in a polite, empathetic, and professional tone while keeping the troubleshooting steps.",
+            "riskFlags": [
+              {
+                "type": "Inappropriate tone",
+                "explanation": "The agent is confrontational, dismissive, and rude to the frustrated customer."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox syncing issue today",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 1,
+              "relevance": 8,
+              "clarity": 7,
+              "completeness": 8,
+              "professionalism": 1,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses the technical troubleshooting steps for the shared inbox syncing issue as outlined in the knowledge base.",
+            "improvements": "The tone is completely unprofessional, hostile, and condescending, which will severely damage customer trust especially given the customer's frustration.",
+            "topSuggestion": "Rewrite the entire message in a polite, empathetic, and professional tone while retaining the correct troubleshooting steps.",
+            "riskFlags": [
+              {
+                "type": "Inappropriate tone",
+                "explanation": "The reply uses hostile, scolding language (\"Honestly, emailing three times won't make this go any faster\") that is entirely inappropriate for customer support."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox that hasn't pulled in any new emails since yesterday.",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 1,
+              "relevance": 8,
+              "clarity": 7,
+              "completeness": 8,
+              "professionalism": 1,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses the technical troubleshooting steps from the knowledge base for a shared inbox sync issue.",
+            "improvements": "The tone is hostile, dismissive, and completely lacks empathy or professionalism, which will severely damage customer trust.",
+            "topSuggestion": "Rewrite the entire message to adopt a polite, empathetic, and professional support tone while retaining the correct technical troubleshooting steps.",
+            "riskFlags": [
+              {
+                "type": "Inappropriate tone",
+                "explanation": "The agent's reply is overtly hostile, condescending, and scolds the customer for writing multiple times."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-11",
+      "failureMode": "None — good reply to angry escalation",
+      "expectedSummary": "No critical flags, overall 7.5–9.0.",
+      "status": "pass",
+      "overallScores": [
+        7.8,
+        8.5,
+        8.9
+      ],
+      "checks": [
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply makes no fabricated claim; any critical flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "flags absent: Inappropriate tone, Ignored customer's question",
+          "backing": "prompt",
+          "severity": "ideal",
+          "why": "Empathetic and addresses the sync issue directly.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "overall >= 7.5",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Relevant, grounded, empathetic escalation handling.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 9",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Guards against inflation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Ready to send | Needs revision]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from 7.5–9.0.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 7.8,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the inbox syncing issue today",
+                "status": "partly answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 7,
+              "professionalism": 8,
+              "groundedness": 8
+            },
+            "strengths": "The reply directly addresses the customer's frustration by acknowledging past attempts to reach out and providing exact, knowledge-base-backed troubleshooting steps.",
+            "improvements": "The agent promises to check back by the end of the day, which assumes the customer will reply immediately and that the issue will be resolved within that timeframe, though the KB doesn't guarantee a timeline for resolving connection faults.",
+            "topSuggestion": "Remove the firm promise to check back by the end of the day unless that is guaranteed by support SLA.",
+            "riskFlags": [],
+            "overallScore": 7.8
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox not pulling in new emails",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses the core issue using exact troubleshooting steps from the knowledge base and acknowledges the customer's frustration regarding repeat contacts.",
+            "improvements": "The agent sets a clear expectation to check back by end of day, which is good, but could have explicitly addressed the urgency by advising on what to do if the integration shows connected.",
+            "topSuggestion": "Ensure that if the issue persists despite the integration showing connected, a clear workaround or escalation path is provided.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 8.9,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Fix the shared inbox syncing issue today",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 9,
+              "relevance": 9,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply directly addresses the core issue using exact troubleshooting steps from the knowledge base, shows strong empathy for the repeated contact and urgency, and commits to a specific follow-up timeline.",
+            "improvements": "The reply is exceptionally well-aligned with the knowledge base and customer situation; only minor phrasing refinements could be made, but none are strictly necessary.",
+            "topSuggestion": "The reply is solid and sendable as-is.",
+            "riskFlags": [],
+            "overallScore": 8.9
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-12",
+      "failureMode": "Context control — correct facts, NO retrieved context",
+      "expectedSummary": "'Invented policy or fact', groundedness <= 4, overall <= 4.9 (Do not send).",
+      "status": "pass",
+      "overallScores": [
+        4.9,
+        4.9,
+        4.9
+      ],
+      "checks": [
+        {
+          "description": "flag present: Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Billing-period, refund, SSO and seat claims are unsupported by the email alone.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "groundedness <= 4",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps groundedness at 4 once a critical flag is raised (no context to ground the claims).",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 4.9",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps overall at 4.9 once a critical flag is raised (no context to ground the claims).",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Do not send as-is]",
+          "backing": "code",
+          "severity": "must",
+          "why": "Follows from the 4.9 critical-flag cap.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 4.9,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 9,
+              "completeness": 9,
+              "professionalism": 8,
+              "groundedness": 4
+            },
+            "strengths": "The reply clearly and directly answers all three customer questions using a well-organized bulleted list, and usefully anticipates the seat limit change.",
+            "improvements": "However, since there were no knowledge base excerpts provided to verify company policies on downgrades, refunds, and SSO, the specific policy claims cannot be verified against the source of truth.",
+            "topSuggestion": "Ensure that company policy details regarding downgrades, refunds, and feature losses are backed by verified knowledge base documentation.",
+            "riskFlags": [
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply details specific policies on downgrade timing, refunds, and feature losses without supporting knowledge base excerpts or evidence in the customer email."
+              }
+            ],
+            "overallScore": 4.9
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 4.9,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 9,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 4
+            },
+            "strengths": "The reply clearly and directly answers all three customer questions using a well-organized bulleted list, and anticipates an important feature limit change regarding user seats.",
+            "improvements": "Since there were no knowledge base excerpts provided, all company policies regarding billing, downgrades, and feature limits are technically unverified by the provided source of truth.",
+            "topSuggestion": "Ensure that the billing, refund, and feature restriction policies stated in the reply are verified against internal company guidelines.",
+            "riskFlags": [
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply makes specific company-specific claims regarding downgrade timelines, refund policies, and feature limits that are not supported by the provided knowledge base excerpts."
+              }
+            ],
+            "overallScore": 4.9
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 4.9,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 9,
+              "completeness": 9,
+              "professionalism": 8,
+              "groundedness": 4
+            },
+            "strengths": "The reply clearly and directly answers all three customer questions using a well-organized bulleted list, and usefully anticipates the change in user seat limits.",
+            "improvements": "However, since no knowledge base excerpts were provided to support the specific claims about downgrade timing, refund rules, SSO, and seat limits, these company-specific facts are technically ungrounded based on the provided source materials.",
+            "topSuggestion": "Ensure that all company policies mentioned regarding downgrades, refunds, and feature access are verified against internal documentation if no KB article was retrieved.",
+            "riskFlags": [
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply details specific company policies regarding downgrade timing, refund rules, SSO, and seat limits that are not supported by the retrieved knowledge base excerpts or the customer email."
+              }
+            ],
+            "overallScore": 4.9
+          }
+        }
+      ]
+    }
+  ]
+}
