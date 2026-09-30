@@ -28,3 +28,5 @@ Latest result: 12/12 cases passed, 36/36 runs completed; 15/15 automatic checks,
 - **The benchmark is a regression suite.** It shows the evaluator catches specific, known failure modes and doesn't flag good replies. It does not measure agreement with human reviewers.
 - **Not accuracy.** Neither file is an independently verified measure of factual accuracy, reply quality, or production performance. A groundedness score of 10 means the evaluator found no unsupported claims, not that the reply was fact-checked.
 - **Scores vary between runs.** Identical input varied by up to 2.0 points in the latest benchmark run.
+- **Flag labels vary too.** A repeat benchmark run the same day scored 11/12: in one of BM-08's three runs the evaluator labeled the unverified fix claim as *Invented policy or fact*, still a critical flag with the same *Do not send* verdict, but not the exact flag the check requires. The published file is the 12/12 run; see the main README for details.
+- **Calibration overlap.** BM-01, BM-07 and BM-11 were used to tune the scoring calibration, so they are not independent evidence.
