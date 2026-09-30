@@ -941,6 +941,22 @@ export default function SupportWorkspacePage() {
                   </div>
                 )}
 
+                {evaluation.companyClaims.length > 0 && (
+                  <div className="quality-block">
+                    <h3>Company claims</h3>
+                    <ul className="question-list">
+                      {evaluation.companyClaims.map((c, i) => (
+                        <li key={i}>
+                          <span title={c.evidence || undefined}>{c.claim}</span>
+                          <span className={`question-status question-${c.support === "unsupported" ? "unanswered" : "answered"}`}>
+                            {c.support}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 <div className="quality-block">
                   <h3>Review notes</h3>
                   <dl className="notes">

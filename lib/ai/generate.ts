@@ -3,16 +3,19 @@
 // Generates a suggested reply to a customer email, informed by the
 // sentiment/urgency signals from Phase 2 (lib/ai/sentiment.ts) and, since
 // the RAG knowledge layer was added (lib/ai/knowledge/), by the most
-// relevant company knowledge-base excerpts for this email. Same
+// relevant company knowledge-base excerpts for this email, plus the most
+// similar past email → reply examples (lib/data/past-email-replies.ts) as
+// few-shot guidance on how to respond. Same
 // provider-agnostic shape as the other modules: build a prompt, call
 // getProvider(), validate the response.
 
 import { getProvider, type AIProvider } from "./provider";
 import { analyzeSentiment, type Sentiment, type Urgency } from "./sentiment";
 import { searchKnowledge } from "./knowledge/retrieve";
-import { formatKnowledgeContext } from "./knowledge/format";
+import { searchExamples } from "./knowledge/retrieve-examples";
+import { formatExampleContext, formatKnowledgeContext } from "./knowledge/format";
 import { checkSupportScope, type SupportScopeDecision } from "./support-scope";
-import type { RetrievedChunk } from "./knowledge/types";
+import type { RetrievedChunk, RetrievedExample } from "./knowledge/types";
 
 export type GenerateResult = {
   reply: string;
@@ -24,11 +27,17 @@ export type GenerateResult = {
   // against what the generator actually saw, not a fresh, possibly
   // different, retrieval.
   retrievedChunks: RetrievedChunk[];
+  // Past email → reply examples shown to the model as style guidance
+  // (lib/data/past-email-replies.ts). Deliberately NOT passed to the
+  // evaluator: examples aren't a source of truth, so a company fact that
+  // only appears in an example must still count as unsupported.
+  retrievedExamples: RetrievedExample[];
 };
 
 // Replaces the knowledge section, and adds reply rules, when the support-scope
-// guard judged the email to be about something other than our product. In
-// scope, the prompt is exactly what it was before the guard existed.
+// guard judged the email to be about something other than our product.
+const OUT_OF_SCOPE_EXAMPLES = `Historical examples: not consulted (this email is outside what our support team handles).`;
+
 const OUT_OF_SCOPE_KNOWLEDGE = `Knowledge base: not consulted. This email was assessed as not being about our company's own products or services, so none of our company knowledge applies to it.`;
 
 const OUT_OF_SCOPE_RULES = `
@@ -41,15 +50,22 @@ This request is outside what our support team handles — it is about another co
 - Keep it brief, friendly and respectful
 `;
 
-function buildPrompt(
+export function buildPrompt(
   email: string,
   sentiment: Sentiment,
   urgency: Urgency,
   retrievedChunks: RetrievedChunk[],
-  inScope: boolean = true
+  inScope: boolean = true,
+  retrievedExamples: RetrievedExample[] = []
 ): string {
+  const examplesSection = inScope
+    ? `HISTORICAL EXAMPLES — past customer emails similar to this one, with the reply our team sent. Use these as examples of response style and of how similar situations were handled. They are NOT authoritative policy: never take a price, policy, timeline or other company fact from them.
+${formatExampleContext(retrievedExamples)}
+end of historical examples`
+    : OUT_OF_SCOPE_EXAMPLES;
+
   const knowledgeSection = inScope
-    ? `Relevant knowledge base excerpts (retrieved for this email):
+    ? `KNOWLEDGE BASE — the source of truth for company-specific facts and policies. Relevant excerpts (retrieved for this email):
 ${formatKnowledgeContext(retrievedChunks)}
 end of knowledge base excerpts`
     : OUT_OF_SCOPE_KNOWLEDGE;
@@ -59,11 +75,15 @@ end of knowledge base excerpts`
 Detected customer sentiment: ${sentiment}
 Detected urgency: ${urgency}
 
+${examplesSection}
+
 ${knowledgeSection}
 
 Before writing, work out (silently — do not include this analysis in the output) exactly what the customer is asking for or needs, including every distinct question they asked, and what about their specific situation is already known from the email.
 
 Then write a reply that:
+- Follows the historical examples' tone, structure and way of handling similar requests where they fit, but is written for THIS customer: don't copy an example's wording or details, and ignore any example that doesn't match this situation
+- If a historical example and the knowledge base disagree on a fact, follows the knowledge base
 - Answers the customer's actual request and each of their questions directly, starting with what matters most to them
 - Focuses on the customer's specific situation rather than a generic policy explanation — apply the policy to their case where the email gives enough detail to do so
 - Treats the knowledge base excerpts above as the source of truth for any company-specific information (policies, prices, refund rules, timelines, eligibility, account or billing procedures, etc.)
@@ -122,11 +142,14 @@ function parseGenerateResponse(raw: string): { reply: string } {
 export async function retrieveGroundingKnowledge(
   email: string,
   provider: AIProvider,
-  search: (query: string) => Promise<RetrievedChunk[]> = searchKnowledge
-): Promise<{ scope: SupportScopeDecision; retrievedChunks: RetrievedChunk[] }> {
+  search: (query: string) => Promise<RetrievedChunk[]> = searchKnowledge,
+  searchPast: (query: string) => Promise<RetrievedExample[]> = searchExamples
+): Promise<{ scope: SupportScopeDecision; retrievedChunks: RetrievedChunk[]; retrievedExamples: RetrievedExample[] }> {
   const scope = await checkSupportScope(email, provider);
-  const retrievedChunks = scope.inScope ? await search(email) : [];
-  return { scope, retrievedChunks };
+  if (!scope.inScope) return { scope, retrievedChunks: [], retrievedExamples: [] };
+  // Both searches are independent embed-and-rank calls, so run them together.
+  const [retrievedChunks, retrievedExamples] = await Promise.all([search(email), searchPast(email)]);
+  return { scope, retrievedChunks, retrievedExamples };
 }
 
 /**
@@ -156,12 +179,12 @@ export async function generateReply(
   // email is about our product at all; if not, nothing is retrieved and the
   // prompt switches to a polite out-of-scope reply.
   const skipRetrieval = provider.name === "mock" && !process.env.GEMINI_API_KEY;
-  const { scope, retrievedChunks } = skipRetrieval
-    ? { scope: null, retrievedChunks: [] as RetrievedChunk[] }
+  const { scope, retrievedChunks, retrievedExamples } = skipRetrieval
+    ? { scope: null, retrievedChunks: [] as RetrievedChunk[], retrievedExamples: [] as RetrievedExample[] }
     : await retrieveGroundingKnowledge(email, provider);
 
-  const prompt = buildPrompt(email, sentiment, urgency, retrievedChunks, scope?.inScope ?? true);
+  const prompt = buildPrompt(email, sentiment, urgency, retrievedChunks, scope?.inScope ?? true, retrievedExamples);
   const raw = await provider.complete(prompt);
   const { reply } = parseGenerateResponse(raw);
-  return { reply, sentiment, urgency, retrievedChunks };
+  return { reply, sentiment, urgency, retrievedChunks, retrievedExamples };
 }

@@ -397,7 +397,11 @@ function mockEvaluate(prompt: string): string {
     },
   ];
 
-  return JSON.stringify({ customerQuestions, strengths, improvements, topSuggestion, scores, riskFlags });
+  // Nor can it extract claims; its phrase-based flags above stand in for
+  // the claim check, so it reports none.
+  const companyClaims: never[] = [];
+
+  return JSON.stringify({ customerQuestions, companyClaims, strengths, improvements, topSuggestion, scores, riskFlags });
 }
 
 const mockProvider: AIProvider = {

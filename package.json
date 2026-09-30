@@ -11,7 +11,8 @@
     "benchmark:evaluator": "tsx scripts/benchmark-evaluator.ts",
     "index:knowledge": "tsx scripts/index-knowledge.ts",
     "test": "tsx --test tests/unit/*.test.ts",
-    "test:live": "tsx --env-file-if-exists=.env.local --test tests/live/*.test.ts"
+    "test:live": "tsx --env-file-if-exists=.env.local --test tests/live/*.test.ts",
+    "index:examples": "tsx scripts/index-examples.ts"
   },
   "dependencies": {
     "@google/genai": "^2.23.0",
