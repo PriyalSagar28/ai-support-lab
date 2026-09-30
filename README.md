@@ -91,6 +91,8 @@ The model's scores are then checked in code, and the overall score is computed i
 
 The standalone `/evaluate` page scores a reply against the email only, since it has no retrieval step; the pipeline and batch script pass the retrieved chunks.
 
+**Why this metric.** A support email has no single correct reply, so exact-match accuracy or text-overlap scores (BLEU/ROUGE against a reference) would penalize good replies that are worded differently. Instead, the six dimensions mirror what a support lead checks before a reply goes out: does it address *this* customer's issue (relevance), answer every question (completeness), stay true to company policy (groundedness), and read well (tone, clarity, professionalism). Relevance and groundedness carry the most weight because a wrong or invented answer does more damage than awkward wording. The code-level caps exist because an average hides critical failures — one invented refund promise should make a reply unsendable however polished the rest is. Per-question statuses and named risk flags make each score explainable, not just a number.
+
 ## Current batch evaluation
 
 `npm run evaluate:batch` runs the **whole system** — scope check, retrieval, generation and evaluation — on the 9 sample emails (see [Dataset](#dataset)). This is different from the evaluator benchmark below, which tests only the evaluator on fixed replies.
@@ -136,7 +138,11 @@ Per email, overall scores ranged from 6.5 to 9.3.
 
 ## Dataset
 
-`lib/data/sample-emails.ts` has nine hand-written support emails: a billing dispute, a bug report, a feature request, an angry escalation, positive feedback, a refund request, a locked account, a general inquiry, and an outage. Together they cover every sentiment, every urgency level, and every category the app classifies. The batch evaluator and the standalone pages use this dataset; the pipeline page has 5 sample tickets of its own (`lib/data/pipeline-samples.ts`), and the benchmark has its own 12 cases (above).
+`lib/data/sample-emails.ts` has nine hand-written support emails: a billing dispute, a bug report, a feature request, an angry escalation, positive feedback, a refund request, a locked account, a general inquiry, and an outage. Together they cover every sentiment, every urgency level, and every category the app classifies.
+
+**How it was built.** The emails are synthetic, written by hand rather than taken from real customers, so the repo contains no personal data. Each one targets a distinct support scenario, together spanning the category, sentiment and urgency labels. Several touch topics the knowledge base covers (refunds, billing, account access), so retrieval is exercised. One, `neutral-inquiry`, asks about something the knowledge base doesn't document. Each record is just `id`, `subject` and `body`. There are no gold labels or reference replies: the dataset is scored by the evaluator (above), not compared against expected answers. It is committed as code, so no fetch or generation step is needed.
+
+The batch evaluator and the standalone pages use this dataset; the pipeline page has 5 sample tickets of its own (`lib/data/pipeline-samples.ts`), and the benchmark has its own 12 cases (above).
 
 ## Setup
 
