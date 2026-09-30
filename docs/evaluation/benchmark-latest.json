@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-09-28T10:21:18.832Z",
+  "runAt": "2026-09-30T11:14:05.727Z",
   "provider": "gemini",
   "runsPerCase": 3,
   "passRule": "A case passes when every 'must' check passes. Flag checks must hold on every run; other checks on at least ceil(2/3 of runs). Errored runs count as failures. 'ideal' checks are reported but never fail a case.",
@@ -8,18 +8,18 @@
     "prompt": "Depends only on the model following the prompt rubric. Failure = evaluator judgment problem."
   },
   "summary": {
-    "cases": 12,
-    "passed": 12,
-    "failed": 0,
+    "cases": 14,
+    "passed": 13,
+    "failed": 1,
     "errored": 0,
     "mustChecks": {
       "code": {
-        "passed": 15,
-        "total": 15
+        "passed": 18,
+        "total": 18
       },
       "prompt": {
-        "passed": 47,
-        "total": 47
+        "passed": 53,
+        "total": 54
       }
     },
     "idealChecks": {
@@ -35,8 +35,8 @@
       "status": "pass",
       "overallScores": [
         9.1,
-        9.1,
-        9.1
+        9.3,
+        8.5
       ],
       "checks": [
         {
@@ -80,7 +80,7 @@
           "backing": "prompt",
           "severity": "must",
           "why": "Rubric reserves 10 for rare exemplary replies; above 9.2 suggests inflation.",
-          "passedRuns": 3,
+          "passedRuns": 2,
           "requiredRuns": 2,
           "passed": true
         },
@@ -115,6 +115,33 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "A downgrade takes effect at the start of your next billing period.",
+                "support": "knowledge base",
+                "evidence": "Downgrading takes effect at the start of your next billing period"
+              },
+              {
+                "claim": "You keep your current plan's features until the downgrade takes effect.",
+                "support": "knowledge base",
+                "evidence": "you keep your current plan's features until then"
+              },
+              {
+                "claim": "There is no partial refund for downgrading mid-period.",
+                "support": "knowledge base",
+                "evidence": "there is no partial refund for downgrading mid-period"
+              },
+              {
+                "claim": "Single sign-on (SSO) is a Business plan feature and isn't included in Pro.",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO)"
+              },
+              {
+                "claim": "Pro includes up to 5 user seats.",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 9,
@@ -123,9 +150,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly answers all three customer questions using the exact knowledge base policies and helpfully anticipates the user seat limit difference on the Pro plan.",
-            "improvements": "The reply is already comprehensive and well-structured, so no significant improvements are needed.",
-            "topSuggestion": "Send the reply as-is.",
+            "strengths": "The reply directly and accurately answers all three customer questions using exact information from the knowledge base, and helpfully anticipates the user seat limit difference.",
+            "improvements": "No meaningful improvements are needed; the reply is clear, polite, and fully grounded.",
+            "topSuggestion": "Send as-is.",
             "riskFlags": [],
             "overallScore": 9.1
           }
@@ -133,7 +160,7 @@
         {
           "run": 2,
           "status": "ok",
-          "overallScore": 9.1,
+          "overallScore": 9.3,
           "band": "Ready to send",
           "evaluation": {
             "customerQuestions": [
@@ -150,25 +177,52 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "A downgrade takes effect at the start of your next billing period.",
+                "support": "knowledge base",
+                "evidence": "Downgrading takes effect at the start of your next billing period"
+              },
+              {
+                "claim": "You keep your current plan's features until then.",
+                "support": "knowledge base",
+                "evidence": "you keep your current plan's features until then"
+              },
+              {
+                "claim": "There is no partial refund for downgrading mid-period.",
+                "support": "knowledge base",
+                "evidence": "there is no partial refund for downgrading mid-period"
+              },
+              {
+                "claim": "Single sign-on (SSO) is a Business plan feature and isn't included in Pro, so you'll lose SSO once the downgrade takes effect.",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month... includes... single sign-on (SSO)"
+              },
+              {
+                "claim": "Pro includes up to 5 user seats, compared with up to 20 on Business.",
+                "support": "knowledge base",
+                "evidence": "Pro — $29/month... Includes up to 5 user seats... Business — $79/month... Includes up to 20 user seats"
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
+              "toneEmpathy": 9,
               "relevance": 9,
               "clarity": 9,
               "completeness": 9,
-              "professionalism": 8,
+              "professionalism": 9,
               "groundedness": 10
             },
-            "strengths": "The reply directly answers all three customer questions accurately using the knowledge base and adds helpful proactive context about user seat limits.",
-            "improvements": "The reply is already strong, well-structured, and fully grounded, leaving no significant improvements needed.",
+            "strengths": "The reply directly answers all three customer questions clearly, uses bullet points effectively, and proactively anticipates an important plan limitation regarding user seats.",
+            "improvements": "The response is exceptionally well-structured, accurate, and completely grounded in the knowledge base, with no meaningful improvements needed.",
             "topSuggestion": "None required; the reply is ready to send as-is.",
             "riskFlags": [],
-            "overallScore": 9.1
+            "overallScore": 9.3
           }
         },
         {
           "run": 3,
           "status": "ok",
-          "overallScore": 9.1,
+          "overallScore": 8.5,
           "band": "Ready to send",
           "evaluation": {
             "customerQuestions": [
@@ -185,19 +239,46 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "A downgrade takes effect at the start of your next billing period.",
+                "support": "knowledge base",
+                "evidence": "Downgrading takes effect at the start of your next billing period"
+              },
+              {
+                "claim": "You keep your current plan's features until then.",
+                "support": "knowledge base",
+                "evidence": "you keep your current plan's features until then"
+              },
+              {
+                "claim": "There is no partial refund for downgrading mid-period.",
+                "support": "knowledge base",
+                "evidence": "there is no partial refund for downgrading mid-period"
+              },
+              {
+                "claim": "Single sign-on (SSO) is a Business plan feature and isn't included in Pro, so you'll lose SSO once the downgrade takes effect.",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month... includes... single sign-on (SSO)"
+              },
+              {
+                "claim": "Pro includes up to 5 user seats, compared with up to 20 on Business.",
+                "support": "knowledge base",
+                "evidence": "Pro — $29/month... Includes up to 5 user seats... Business — $79/month... includes up to 20 user seats"
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
-              "relevance": 9,
-              "clarity": 9,
-              "completeness": 9,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses all three customer questions with accurate information from the knowledge base and helpfully anticipates the user seat limit difference.",
-            "improvements": "The reply is exceptionally clear, structured, and accurate, leaving no meaningful improvements to be made.",
-            "topSuggestion": "None, the reply is ready to send as-is.",
+            "strengths": "The reply directly answers all three customer questions clearly, uses bullet points effectively, and anticipates a helpful follow-up regarding user seat limits.",
+            "improvements": "No meaningful improvements needed as the response is clear, professional, and fully grounded in the knowledge base.",
+            "topSuggestion": "None required.",
             "riskFlags": [],
-            "overallScore": 9.1
+            "overallScore": 8.5
           }
         }
       ]
@@ -209,7 +290,7 @@
       "status": "pass",
       "overallScores": [
         7.5,
-        6.5,
+        7.4,
         7.5
       ],
       "checks": [
@@ -294,21 +375,38 @@
                 "status": "answered"
               },
               {
-                "question": "Will we lose SSO?",
+                "question": "And will we lose SSO?",
                 "status": "partly answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Downgrades apply from your next billing cycle.",
+                "support": "knowledge base",
+                "evidence": "Downgrading takes effect at the start of your next billing period"
+              },
+              {
+                "claim": "Refunds aren't available in this case.",
+                "support": "knowledge base",
+                "evidence": "there is no partial refund for downgrading mid-period."
+              },
+              {
+                "claim": "Some Business features, like SSO, may work differently on Pro.",
+                "support": "knowledge base",
+                "evidence": "Business ... includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
+              "toneEmpathy": 7,
               "relevance": 8,
-              "clarity": 8,
+              "clarity": 7,
               "completeness": 6,
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply correctly answers the questions regarding the downgrade timing and the lack of a partial refund based on the knowledge base.",
-            "improvements": "The response to the SSO question is vague (\"may work differently\") instead of directly confirming that SSO is a Business feature not included in Pro, meaning they will lose it.",
-            "topSuggestion": "Explicitly state whether they will lose SSO by noting that SSO is a Business feature not available on the Pro plan.",
+            "strengths": "The reply correctly identifies the timeline for the downgrade and the refund policy based on the knowledge base.",
+            "improvements": "The response is overly vague about SSO ('may work differently') instead of directly answering whether they will lose SSO when moving from Business to Pro.",
+            "topSuggestion": "Explicitly state that they will lose SSO on the Pro plan, as SSO is only included in the Business plan.",
             "riskFlags": [],
             "overallScore": 7.5
           }
@@ -316,7 +414,7 @@
         {
           "run": 2,
           "status": "ok",
-          "overallScore": 6.5,
+          "overallScore": 7.4,
           "band": "Needs revision",
           "evaluation": {
             "customerQuestions": [
@@ -333,24 +431,36 @@
                 "status": "partly answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Downgrades apply from your next billing cycle",
+                "support": "knowledge base",
+                "evidence": "Downgrading takes effect at the start of your next billing period"
+              },
+              {
+                "claim": "Refunds aren't available for downgrading",
+                "support": "knowledge base",
+                "evidence": "there is no partial refund for downgrading mid-period"
+              },
+              {
+                "claim": "Some Business features, like SSO, may work differently on Pro",
+                "support": "knowledge base",
+                "evidence": "Business ... includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO)"
+              }
+            ],
             "scores": {
               "toneEmpathy": 7,
               "relevance": 8,
-              "clarity": 8,
-              "completeness": 5,
+              "clarity": 7,
+              "completeness": 6,
               "professionalism": 8,
-              "groundedness": 10
+              "groundedness": 8
             },
-            "strengths": "The reply correctly addresses the downgrade timing and refund policy according to the knowledge base.",
-            "improvements": "The answer regarding SSO is vague (\"may work differently\") instead of directly confirming that SSO is a Business feature not included in Pro, and the tone is slightly abrupt.",
-            "topSuggestion": "Explicitly confirm that SSO will be lost because it is a Business-only feature, and warm up the opening sentence.",
-            "riskFlags": [
-              {
-                "type": "Ignored customer's question",
-                "explanation": "The question about whether they will lose SSO was only partly answered with a vague statement rather than a direct confirmation."
-              }
-            ],
-            "overallScore": 6.5
+            "strengths": "The reply correctly identifies the timeline for downgrades and the policy regarding refunds based on the knowledge base.",
+            "improvements": "The reply is vague about SSO (stating it 'may work differently') rather than directly answering whether they will lose it based on the plan differences.",
+            "topSuggestion": "Explicitly state that SSO is a Business feature not included in Pro, so they will lose access to it when the downgrade takes effect.",
+            "riskFlags": [],
+            "overallScore": 7.4
           }
         },
         {
@@ -369,8 +479,25 @@
                 "status": "answered"
               },
               {
-                "question": "Will we lose SSO?",
+                "question": "And will we lose SSO?",
                 "status": "partly answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Downgrades apply from your next billing cycle",
+                "support": "knowledge base",
+                "evidence": "Downgrading takes effect at the start of your next billing period"
+              },
+              {
+                "claim": "Refunds aren't available for downgrading",
+                "support": "knowledge base",
+                "evidence": "there is no partial refund for downgrading mid-period"
+              },
+              {
+                "claim": "Some Business features, like SSO, may work differently on Pro",
+                "support": "knowledge base",
+                "evidence": "Business ... includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO)"
               }
             ],
             "scores": {
@@ -381,9 +508,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply correctly addresses the downgrade timeline and refund policy using the knowledge base.",
-            "improvements": "The reply is too vague about SSO, stating only that it \"may work differently\" rather than clearly confirming that Business includes SSO while Pro does not.",
-            "topSuggestion": "Explicitly confirm that moving to Pro means losing SSO, since Business includes SSO and Pro does not.",
+            "strengths": "The reply correctly identifies the timeline and refund policy for downgrades based on the knowledge base.",
+            "improvements": "The response about SSO is overly vague ('may work differently') instead of directly confirming whether they will lose the feature.",
+            "topSuggestion": "State clearly that they will lose access to SSO upon moving to the Pro plan, as SSO is exclusive to Business.",
             "riskFlags": [],
             "overallScore": 7.5
           }
@@ -398,7 +525,7 @@
       "overallScores": [
         4.5,
         4.5,
-        5.5
+        4.5
       ],
       "checks": [
         {
@@ -415,7 +542,7 @@
           "backing": "prompt",
           "severity": "ideal",
           "why": "All statements are supported by retrieved chunks. Informational: the evaluator may treat generic advice as a real policy applied to the wrong situation, which the prompt caps at groundedness 6.",
-          "passedRuns": 2,
+          "passedRuns": 3,
           "requiredRuns": 2,
           "passed": true
         },
@@ -465,25 +592,37 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox that hasn't pulled in any new emails since yesterday.",
+                "question": "Fix the shared inbox syncing issue today",
                 "status": "unanswered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Note the exact error message, browser, OS, and roughly when the issue started",
+                "support": "knowledge base",
+                "evidence": "Note the exact error message if one appears, the browser and OS you're using, and roughly when the issue started."
+              },
+              {
+                "claim": "Check the status page for any ongoing incident, clear browser cache, and update browser",
+                "support": "knowledge base",
+                "evidence": "check the status page for any ongoing incident — most sudden, widespread crashes are on our end, not yours. If the status page is clear: clear your browser cache, make sure your browser is updated to the latest version"
+              }
+            ],
             "scores": {
-              "toneEmpathy": 7,
+              "toneEmpathy": 6,
               "relevance": 4,
-              "clarity": 7,
+              "clarity": 8,
               "completeness": 3,
               "professionalism": 8,
-              "groundedness": 6
+              "groundedness": 8
             },
-            "strengths": "The reply maintains a polite, professional tone and is clear in its presentation.",
-            "improvements": "The agent completely missed the actual issue (shared inbox not syncing) and instead provided troubleshooting steps for application crashes and general error collection. The agent should have addressed the shared inbox sync settings and the 15-minute sync delay mentioned in the knowledge base.",
-            "topSuggestion": "Replace the irrelevant troubleshooting steps with the correct ones for a shared inbox not syncing (checking Settings > Integrations for the 'Connected' status and explaining the normal sync delay).",
+            "strengths": "The reply maintains a polite, professional tone and correctly utilizes troubleshooting steps from the knowledge base.",
+            "improvements": "The reply completely misses the customer's actual problem (shared inbox not syncing) and instead provides generic steps for browser crashes and general troubleshooting.",
+            "topSuggestion": "Address the shared inbox syncing issue specifically by referencing Settings > Integrations as outlined in the knowledge base, rather than giving generic crash troubleshooting steps.",
             "riskFlags": [
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply gave troubleshooting steps for app crashes instead of addressing the shared inbox sync issue."
+                "explanation": "The reply completely ignores the customer's specific issue regarding the shared inbox failing to sync and addresses a different problem entirely."
               }
             ],
             "overallScore": 4.5
@@ -497,25 +636,37 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox not pulling in new emails since yesterday.",
+                "question": "Fix the shared inbox not pulling in new emails.",
                 "status": "unanswered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "General steps before contacting support include noting the exact error message, browser, OS, and roughly when the issue started.",
+                "support": "knowledge base",
+                "evidence": "Note the exact error message if one appears, the browser and OS you're using, and roughly when the issue started."
+              },
+              {
+                "claim": "Checking the status page for ongoing incidents, clearing browser cache, and updating the browser are troubleshooting steps for crashes or freezes.",
+                "support": "knowledge base",
+                "evidence": "clear your browser cache, make sure your browser is updated to the latest version... check the status page for any ongoing incident"
+              }
+            ],
             "scores": {
-              "toneEmpathy": 5,
-              "relevance": 4,
-              "clarity": 6,
+              "toneEmpathy": 6,
+              "relevance": 3,
+              "clarity": 8,
               "completeness": 3,
-              "professionalism": 7,
+              "professionalism": 8,
               "groundedness": 7
             },
-            "strengths": "The reply maintains a polite, professional business tone.",
-            "improvements": "The reply completely misses the actual issue (shared inbox not syncing) by providing troubleshooting steps for app crashes and general bug reporting, and it lacks empathy for an urgent, repeat inquiry.",
-            "topSuggestion": "Replace the troubleshooting steps with the correct knowledge base solution for shared inboxes not syncing (checking Settings > Integrations for connection status) and acknowledge the frustration of a repeat contact.",
+            "strengths": "The reply maintains a polite, professional tone and correctly quotes general troubleshooting documentation.",
+            "improvements": "The reply addresses browser crashes instead of the customer's shared inbox sync issue, thereby ignoring the core problem and applying irrelevant troubleshooting steps.",
+            "topSuggestion": "Revise the reply to address the shared inbox sync issue using the correct troubleshooting steps from the knowledge base (checking Settings > Integrations).",
             "riskFlags": [
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply addresses browser crashes and general reporting steps instead of the customer's shared inbox syncing issue."
+                "explanation": "The reply ignores the customer's actual issue regarding the shared inbox not syncing and provides unrelated steps for browser crashes."
               }
             ],
             "overallScore": 4.5
@@ -524,33 +675,45 @@
         {
           "run": 3,
           "status": "ok",
-          "overallScore": 5.5,
-          "band": "Needs revision",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox issue where new emails aren't pulling in.",
+                "question": "Fix the shared inbox not pulling in new emails.",
                 "status": "unanswered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "General steps before contacting support include noting the exact error message, browser, OS, and roughly when the issue started.",
+                "support": "knowledge base",
+                "evidence": "Note the exact error message if one appears, the browser and OS you're using, and roughly when the issue started."
+              },
+              {
+                "claim": "Troubleshooting steps for the application keeping crashing or freezing include checking the status page, clearing browser cache, updating browser, and disabling browser extensions.",
+                "support": "knowledge base",
+                "evidence": "check the status page for any ongoing incident... clear your browser cache, make sure your browser is updated to the latest version, and try disabling browser extensions one at a time"
+              }
+            ],
             "scores": {
-              "toneEmpathy": 6,
+              "toneEmpathy": 7,
               "relevance": 4,
               "clarity": 8,
-              "completeness": 4,
-              "professionalism": 7,
-              "groundedness": 7
+              "completeness": 3,
+              "professionalism": 8,
+              "groundedness": 8
             },
-            "strengths": "The reply is polite and clearly structured.",
-            "improvements": "The agent provided troubleshooting steps for the wrong issue (application freezing instead of shared inbox syncing), completely ignoring the customer's actual problem and referring to irrelevant knowledge base instructions.",
-            "topSuggestion": "Replace the troubleshooting steps with the correct ones for shared inbox syncing (checking Settings > Integrations for connection status) and acknowledge the customer's frustration as this is their third time writing.",
+            "strengths": "The reply maintains a polite, professional tone and correctly references troubleshooting steps from the knowledge base.",
+            "improvements": "The reply provides troubleshooting steps for a crashing application instead of addressing the customer's actual issue with the shared inbox not syncing.",
+            "topSuggestion": "Replace the irrelevant application-crashing troubleshooting steps with the correct shared inbox troubleshooting steps from the knowledge base (checking Settings > Integrations and accounting for the 15-minute sync delay).",
             "riskFlags": [
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply fails to address the shared inbox syncing issue and instead gives steps for app freezing."
+                "explanation": "The reply addresses application crashes instead of the shared inbox sync failure reported by the customer."
               }
             ],
-            "overallScore": 5.5
+            "overallScore": 4.5
           }
         }
       ]
@@ -561,9 +724,9 @@
       "expectedSummary": "Refund question 'unanswered', 'Ignored customer's question' flag, completeness <= 5, overall 5.0–6.9, no critical flags.",
       "status": "pass",
       "overallScores": [
+        6.5,
         5.5,
-        5.5,
-        5.5
+        6.5
       ],
       "checks": [
         {
@@ -634,41 +797,68 @@
         {
           "run": 1,
           "status": "ok",
-          "overallScore": 5.5,
+          "overallScore": 6.5,
           "band": "Needs revision",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Please refund that charge ($278.40 annual renewal six weeks ago)",
+                "question": "Please refund that charge ($278.40 for annual renewal six weeks ago)",
                 "status": "unanswered"
               },
               {
                 "question": "Cancel my account",
-                "status": "answered"
+                "status": "partly answered"
               },
               {
                 "question": "What happens to my data once I cancel?",
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "You can cancel at any time from Settings > Billing > Cancel Subscription",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Cancellation takes effect immediately in the sense that no future charges are scheduled",
+                "support": "knowledge base",
+                "evidence": "Cancellation takes effect immediately in the sense that no future charges are scheduled"
+              },
+              {
+                "claim": "Your plan features stay active until the end of your current billing period",
+                "support": "knowledge base",
+                "evidence": "your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Your tickets, automation rules and integration connections are kept for 30 days after the billing period ends in case you want to reactivate",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate."
+              },
+              {
+                "claim": "After those 30 days, the data is permanently deleted and can't be recovered",
+                "support": "knowledge base",
+                "evidence": "After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
               "clarity": 8,
-              "completeness": 4,
+              "completeness": 5,
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply clearly explains how to cancel the account and accurately details what happens to customer data afterward, maintaining a polite and professional tone.",
-            "improvements": "The agent completely missed the customer's explicit request for a refund of the annual renewal charge, which was outside the 14-day eligibility window.",
-            "topSuggestion": "Address the refund request directly by explaining that the charge is outside the 14-day refund window as per company policy.",
+            "strengths": "The reply clearly and accurately explains the cancellation process and data retention policy using the knowledge base excerpts.",
+            "improvements": "The agent completely ignored the customer's request for a refund, which falls outside the 14-day window per the knowledge base but still needed to be addressed.",
+            "topSuggestion": "Address the refund request directly by explaining that charges older than 14 days are not eligible for a refund according to company policy.",
             "riskFlags": [
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply failed to address the customer's request for a refund on their annual renewal charge."
+                "explanation": "The reply fails to address the customer's request for a refund of the annual renewal charge."
               }
             ],
-            "overallScore": 5.5
+            "overallScore": 6.5
           }
         },
         {
@@ -679,33 +869,50 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Refund my annual renewal charge of $278.40",
+                "question": "Refund annual renewal of $278.40 charged six weeks ago",
                 "status": "unanswered"
               },
               {
-                "question": "Cancel my account",
+                "question": "Cancel account",
                 "status": "answered"
               },
               {
-                "question": "What happens to my data once I cancel?",
+                "question": "What happens to data once cancelled?",
                 "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Cancellation takes effect immediately in the sense that no future charges are scheduled, but plan features remain active until the end of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Cancellation takes effect immediately in the sense that no future charges are scheduled, but your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Account data is retained for 30 days after the billing period ends",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate."
+              },
+              {
+                "claim": "After 30 days of inactivity on a cancelled account, data is permanently deleted and cannot be recovered",
+                "support": "knowledge base",
+                "evidence": "After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
               }
             ],
             "scores": {
               "toneEmpathy": 8,
-              "relevance": 6,
+              "relevance": 5,
               "clarity": 8,
               "completeness": 4,
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply accurately explains cancellation instructions and data retention rules based on the knowledge base.",
-            "improvements": "The agent completely ignored the customer's request for a refund on their annual renewal, which was charged six weeks ago.",
-            "topSuggestion": "Address the refund request directly by informing the customer that the charge is outside the 14-day refund window.",
+            "strengths": "The reply correctly explains how to cancel and what happens to customer data, accurately citing the knowledge base.",
+            "improvements": "The reply completely ignores the customer's request for a refund on their renewal charge from six weeks ago.",
+            "topSuggestion": "Address the refund request using the knowledge base policy (charges older than 14 days are not refundable).",
             "riskFlags": [
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply fails to address the customer's explicit request for a refund of their annual renewal charge."
+                "explanation": "The reply fails to address the customer's explicit request for a refund."
               }
             ],
             "overallScore": 5.5
@@ -714,41 +921,68 @@
         {
           "run": 3,
           "status": "ok",
-          "overallScore": 5.5,
+          "overallScore": 6.5,
           "band": "Needs revision",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Refund my annual renewal charge of $278.40",
+                "question": "Refund annual renewal of $278.40 charged six weeks ago",
                 "status": "unanswered"
               },
               {
-                "question": "Cancel my account",
+                "question": "Cancel account",
                 "status": "answered"
               },
               {
-                "question": "What happens to my data once I cancel?",
+                "question": "What happens to data once cancelled?",
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Cancellation can be done anytime from Settings > Billing > Cancel Subscription",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Cancellation takes effect immediately in terms of no future charges",
+                "support": "knowledge base",
+                "evidence": "Cancellation takes effect immediately in sense that no future charges are scheduled"
+              },
+              {
+                "claim": "Plan features remain active until the end of the current billing period",
+                "support": "knowledge base",
+                "evidence": "your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Account data is retained for 30 days after the billing period ends",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends"
+              },
+              {
+                "claim": "Data is permanently deleted after 30 days of inactivity on a cancelled account",
+                "support": "knowledge base",
+                "evidence": "After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
-              "relevance": 8,
+              "toneEmpathy": 7,
+              "relevance": 6,
               "clarity": 8,
-              "completeness": 4,
+              "completeness": 5,
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply accurately explains cancellation and data retention policies based on the knowledge base.",
-            "improvements": "The agent completely missed addressing the customer's refund request for the $278.40 renewal charge, which falls outside the 14-day policy window.",
-            "topSuggestion": "Address the refund request directly by explaining that the charge is non-refundable because it occurred six weeks ago, outside the 14-day policy window.",
+            "strengths": "The reply clearly explains how to cancel, what happens to plan features, and precisely details the data retention timeline using the knowledge base.",
+            "improvements": "The reply completely ignores the customer's request for a refund of the charge that occurred six weeks ago.",
+            "topSuggestion": "Address the refund request using the refund policy knowledge base (charges older than 14 days are not refundable).",
             "riskFlags": [
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply completely fails to address the customer's request for a refund on their annual renewal charge."
+                "explanation": "The customer explicitly asked for a refund of their annual renewal charge, which the reply did not address."
               }
             ],
-            "overallScore": 5.5
+            "overallScore": 6.5
           }
         }
       ]
@@ -759,8 +993,8 @@
       "expectedSummary": "'Invented policy or fact' (likely also 'Unsupported refund promise'), groundedness <= 4, overall <= 4.9 (Do not send).",
       "status": "pass",
       "overallScores": [
-        2.5,
         3.5,
+        4.5,
         4.5
       ],
       "checks": [
@@ -814,56 +1048,12 @@
         {
           "run": 1,
           "status": "ok",
-          "overallScore": 2.5,
-          "band": "Do not send as-is",
-          "evaluation": {
-            "customerQuestions": [
-              {
-                "question": "Refund the annual renewal charge of $278.40",
-                "status": "answered"
-              },
-              {
-                "question": "Cancel my account",
-                "status": "partly answered"
-              },
-              {
-                "question": "What happens to my data once I cancel?",
-                "status": "answered"
-              }
-            ],
-            "scores": {
-              "toneEmpathy": 8,
-              "relevance": 5,
-              "clarity": 7,
-              "completeness": 5,
-              "professionalism": 5,
-              "groundedness": 1
-            },
-            "strengths": "The reply addresses the data retention question clearly and maintains an empathetic tone regarding the renewal charge.",
-            "improvements": "The reply invents a non-existent 50% partial refund policy for annual plans cancelled within 60 days, which directly contradicts the refund policy knowledge base stating that charges older than 14 days are not refundable.",
-            "topSuggestion": "Remove the invented partial refund policy and correctly apply the 14-day refund window rule, informing the customer that the charge is outside the eligible refund period.",
-            "riskFlags": [
-              {
-                "type": "Unsupported refund promise",
-                "explanation": "The agent promised a $139.20 partial refund based on an invented 60-day policy not present in the knowledge base."
-              },
-              {
-                "type": "Invented policy or fact",
-                "explanation": "The reply cites a non-existent company policy of refunding 50% of annual plans cancelled within 60 days of renewal."
-              }
-            ],
-            "overallScore": 2.5
-          }
-        },
-        {
-          "run": 2,
-          "status": "ok",
           "overallScore": 3.5,
           "band": "Do not send as-is",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Refund the annual renewal charge of $278.40",
+                "question": "Please refund that charge ($278.40)",
                 "status": "answered"
               },
               {
@@ -875,28 +1065,106 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "As a one-time courtesy, we refund 50% of annual plans that are cancelled within 60 days of renewal",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "You qualify for a $139.20 refund",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Once you cancel from Settings > Billing > Cancel Subscription, I'll process the partial refund and it will be back on your card within 5-10 business days",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Your data is kept for 30 days after your billing period ends, then permanently deleted",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
+              "toneEmpathy": 7,
               "relevance": 6,
               "clarity": 8,
               "completeness": 6,
-              "professionalism": 8,
+              "professionalism": 7,
               "groundedness": 2
             },
-            "strengths": "The reply addresses the data retention question clearly and maintains an empathetic, polite tone.",
-            "improvements": "The agent hallucinates a 50% partial refund policy for annual plans cancelled within 60 days, which contradicts the knowledge base stating charges older than 14 days are not refundable.",
-            "topSuggestion": "Remove the fabricated partial refund offer and correctly apply the 14-day refund policy, denying the refund for a charge from six weeks ago.",
+            "strengths": "The reply addresses the customer's data retention question clearly and correctly using the knowledge base.",
+            "improvements": "The agent invented a non-existent 50% partial refund policy for annual plans renewed within 60 days, which directly violates the refund policy stating charges older than 14 days are not refundable.",
+            "topSuggestion": "Remove the fabricated partial refund policy and inform the customer honestly that they are outside the 14-day refund window.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply promises a 50% refund that is not supported by the knowledge base, which states charges older than 14 days are not refundable."
+                "explanation": "The reply promises a 50% partial refund that is completely unsupported by the knowledge base policy."
               },
               {
                 "type": "Invented policy or fact",
-                "explanation": "The agent invents a policy that annual plans cancelled within 60 days qualify for a 50% courtesy refund."
+                "explanation": "The reply invents a 60-day renewal refund courtesy policy and a 5-10 business day timeline."
               }
             ],
             "overallScore": 3.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 4.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge ($278.40)",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "We refund 50% of annual plans that are cancelled within 60 days of renewal as a one-time courtesy",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Your data is kept for 30 days after your billing period ends, then permanently deleted",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends... After 30 days of inactivity on a cancelled account, the data is permanently deleted"
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 7,
+              "relevance": 7,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 7,
+              "groundedness": 3
+            },
+            "strengths": "The reply directly addresses all parts of the customer's message, including the refund, cancellation, and data retention questions.",
+            "improvements": "The agent invented a 50% partial refund policy for annual plans within 60 days, which violates the actual refund policy (charges older than 14 days are not refundable).",
+            "topSuggestion": "Remove the false promise of a 50% refund, apply the actual 14-day refund policy, and explain that the charge is outside the eligibility window while confirming the cancellation.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply promises a 50% partial refund that is not supported by the knowledge base or email."
+              },
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply fabricates a policy about refunding 50% of annual plans cancelled within 60 days of renewal."
+              }
+            ],
+            "overallScore": 4.5
           }
         },
         {
@@ -907,37 +1175,54 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Refund the annual renewal charge of $278.40",
-                "status": "answered"
+                "question": "Please refund that charge ($278.40)",
+                "status": "partly answered"
               },
               {
-                "question": "Cancel my account",
-                "status": "answered"
+                "question": "cancel my account",
+                "status": "partly answered"
               },
               {
-                "question": "What happens to my data once I cancel?",
+                "question": "what happens to my data once I cancel?",
                 "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "As a one-time courtesy, we refund 50% of annual plans that are cancelled within 60 days of renewal",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Cancellation takes effect immediately in the sense that no future charges are scheduled, but your plan features remain active until the end of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Cancellation takes effect immediately in the sense that no future charges are scheduled, but your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Your data is kept for 30 days after your billing period ends, then permanently deleted",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
               }
             ],
             "scores": {
               "toneEmpathy": 8,
-              "relevance": 8,
+              "relevance": 5,
               "clarity": 8,
-              "completeness": 8,
+              "completeness": 6,
               "professionalism": 8,
               "groundedness": 3
             },
-            "strengths": "The reply directly addresses all three parts of the customer's request, providing clear details on cancellation steps, data retention, and a refund.",
-            "improvements": "The reply applies a partial refund policy that is not supported by the knowledge base excerpts, as charges older than 14 days are not refundable and there is no 50% partial refund policy for annual plans within 60 days.",
-            "topSuggestion": "Remove the ungrounded 50% refund offer and correctly apply the refund policy, stating that charges older than 14 days are non-refundable.",
+            "strengths": "The reply correctly answers the question about data retention and adopts a polite, empathetic tone.",
+            "improvements": "The agent hallucinates a non-existent 50% partial refund policy for annual plans within 60 days, violating the strict 14-day refund policy stated in the knowledge base.",
+            "topSuggestion": "Remove the false promise of a 50% refund, correctly inform the customer that they are outside the 14-day refund eligibility window, and explain the cancellation and data retention steps clearly.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply promises a 50% refund as a courtesy, which is not supported by the knowledge base excerpts since the charge occurred six weeks ago."
+                "explanation": "The reply promises a 50% refund that is not supported by the knowledge base or email."
               },
               {
                 "type": "Invented policy or fact",
-                "explanation": "The reply invents a policy that annual plans cancelled within 60 days qualify for a 50% refund."
+                "explanation": "The reply fabricates a policy about refunding 50% of annual plans cancelled within 60 days."
               }
             ],
             "overallScore": 4.5
@@ -952,8 +1237,8 @@
       "status": "pass",
       "overallScores": [
         4.5,
-        4.5,
-        4.5
+        4.9,
+        4.9
       ],
       "checks": [
         {
@@ -1011,33 +1296,55 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Please refund that charge ($278.40 charged six weeks ago)",
+                "question": "Please refund that charge ($278.40 annual renewal)",
                 "status": "answered"
               },
               {
-                "question": "Cancel my account",
+                "question": "and cancel my account",
                 "status": "answered"
               },
               {
-                "question": "What happens to my data once I cancel?",
+                "question": "what happens to my data once I cancel?",
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "The renewal was charged before your cancellation took effect, qualifying under the refunds-after-cancellation policy",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "The $278.40 charge will be refunded automatically within 5 business days",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "To cancel, go to Settings > Billing > Cancel Subscription and confirm.",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Your account data is retained for 30 days after the billing period ends in case you want to reactivate; after that it's permanently deleted.",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
-              "relevance": 5,
+              "toneEmpathy": 7,
+              "relevance": 7,
               "clarity": 8,
               "completeness": 8,
               "professionalism": 8,
               "groundedness": 3
             },
-            "strengths": "The reply addresses all three customer points (refund, cancellation, and data retention), but applies an incorrect refund policy since the charge was six weeks ago, not moments before cancelling.",
-            "improvements": "The agent misapplied the refunds-after-cancellation policy; the charge is actually older than 14 days and not refundable according to the knowledge base.",
-            "topSuggestion": "Correct the refund decision to state that the charge is outside the 14-day refund window and therefore not eligible for a refund.",
+            "strengths": "The reply addresses all parts of the customer's message, including cancellation instructions and data retention.",
+            "improvements": "The agent misapplied the refunds-after-cancellation policy. The customer was charged six weeks ago and forgot to cancel, not charged right before cancelling, so the charge is outside the 14-day refund window and not eligible for an automatic refund.",
+            "topSuggestion": "Correct the refund policy application by explaining that the charge is outside the 14-day refund window since it occurred six weeks ago.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply promises a full refund for a charge that occurred six weeks ago, violating the 14-day refund eligibility policy."
+                "explanation": "The reply promises an automatic refund for a charge that occurred six weeks ago, misapplying the refunds-after-cancellation policy which only covers charges processed moments before cancellation."
               }
             ],
             "overallScore": 4.5
@@ -1046,52 +1353,12 @@
         {
           "run": 2,
           "status": "ok",
-          "overallScore": 4.5,
+          "overallScore": 4.9,
           "band": "Do not send as-is",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Refund the $278.40 annual renewal charge",
-                "status": "answered"
-              },
-              {
-                "question": "Cancel the account",
-                "status": "answered"
-              },
-              {
-                "question": "What happens to data once canceled?",
-                "status": "answered"
-              }
-            ],
-            "scores": {
-              "toneEmpathy": 8,
-              "relevance": 6,
-              "clarity": 8,
-              "completeness": 8,
-              "professionalism": 8,
-              "groundedness": 3
-            },
-            "strengths": "The reply directly addresses all three customer questions and covers data retention accurately based on the knowledge base.",
-            "improvements": "The agent misapplied the policy regarding the refund eligibility. The customer was charged 6 weeks ago, which exceeds the 14-day refund window, yet the reply incorrectly promised an automatic refund under the post-cancellation policy.",
-            "topSuggestion": "Correct the refund decision to reflect that the charge is non-refundable due to being older than 14 days.",
-            "riskFlags": [
-              {
-                "type": "Unsupported refund promise",
-                "explanation": "The reply promises a refund for a charge that is six weeks old, violating the 14-day refund policy."
-              }
-            ],
-            "overallScore": 4.5
-          }
-        },
-        {
-          "run": 3,
-          "status": "ok",
-          "overallScore": 4.5,
-          "band": "Do not send as-is",
-          "evaluation": {
-            "customerQuestions": [
-              {
-                "question": "Please refund that charge ($278.40)",
+                "question": "Please refund that charge ($278.40 annual renewal)",
                 "status": "answered"
               },
               {
@@ -1103,28 +1370,108 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "The charge qualifies under refunds-after-cancellation because it was charged before cancellation took effect",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "The $278.40 charge will be refunded automatically within 5 business days",
+                "support": "knowledge base",
+                "evidence": "If you cancel your subscription but are charged again before the cancellation takes effect (for example, a renewal that processed moments before you cancelled), that charge is refunded automatically within 5 business days."
+              },
+              {
+                "claim": "To cancel, go to Settings > Billing > Cancel Subscription and confirm.",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Your account data is retained for 30 days after the billing period ends in case you want to reactivate; after that it's permanently deleted.",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
-              "relevance": 5,
+              "relevance": 8,
               "clarity": 8,
               "completeness": 8,
               "professionalism": 8,
-              "groundedness": 3
+              "groundedness": 4
             },
-            "strengths": "The reply directly addresses all three customer questions, explaining data retention, cancellation instructions, and the refund status clearly.",
-            "improvements": "The agent misapplied the refunds-after-cancellation policy; the customer was charged six weeks ago (outside the 14-day window and not a recent cancellation timing overlap), so the charge is actually non-refundable.",
-            "topSuggestion": "Correct the refund decision to state that the 14-day refund window has passed and the charge is non-refundable, while still providing the cancellation steps and data retention information.",
+            "strengths": "The reply accurately addresses all three questions from the customer (refund, cancellation steps, and data retention) while maintaining a professional and helpful tone.",
+            "improvements": "The agent misapplied the refunds-after-cancellation policy to a charge that occurred six weeks ago, rather than a renewal processed immediately before cancellation.",
+            "topSuggestion": "Correct the refund assessment to reflect that a charge from six weeks ago is past the 14-day eligibility window and not eligible for a refund.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply promises an automatic refund for a charge that occurred six weeks ago, which violates the 14-day refund policy."
-              },
-              {
-                "type": "Invented policy or fact",
-                "explanation": "The reply incorrectly applies the refunds-after-cancellation policy to a charge from six weeks prior."
+                "explanation": "The reply promises a refund for a charge from six weeks ago under the 'refunds-after-cancellation' policy, which only applies to charges processed moments before cancellation."
               }
             ],
-            "overallScore": 4.5
+            "overallScore": 4.9
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 4.9,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Please refund that charge",
+                "status": "answered"
+              },
+              {
+                "question": "Cancel my account",
+                "status": "answered"
+              },
+              {
+                "question": "What happens to my data once I cancel?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "The charge qualifies for a refund under the refunds-after-cancellation policy.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "The $278.40 charge will be refunded automatically within 5 business days.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "To cancel, go to Settings > Billing > Cancel Subscription and confirm.",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Account data is retained for 30 days after the billing period ends in case of reactivation, then permanently deleted.",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 4
+            },
+            "strengths": "The reply addresses all three customer points (refund, cancellation, and data retention) and includes clear instructions on how to cancel.",
+            "improvements": "The agent misapplied the refunds-after-cancellation policy to a charge that occurred six weeks ago, promising an automatic refund for a charge that is actually ineligible under the 14-day refund policy.",
+            "topSuggestion": "Correct the refund stance to state that charges older than 14 days are non-refundable, rather than promising a refund under the post-cancellation policy.",
+            "riskFlags": [
+              {
+                "type": "Unsupported refund promise",
+                "explanation": "The reply incorrectly promises a refund for a six-week-old charge under the refunds-after-cancellation policy."
+              }
+            ],
+            "overallScore": 4.9
           }
         }
       ]
@@ -1137,7 +1484,7 @@
       "overallScores": [
         8.5,
         8.5,
-        8.5
+        9.3
       ],
       "checks": [
         {
@@ -1181,7 +1528,7 @@
           "backing": "prompt",
           "severity": "must",
           "why": "Guards against inflation.",
-          "passedRuns": 3,
+          "passedRuns": 2,
           "requiredRuns": 2,
           "passed": true
         },
@@ -1204,7 +1551,7 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Please refund that charge ($278.40 annual renewal from six weeks ago)",
+                "question": "Refund the annual renewal charge of $278.40",
                 "status": "answered"
               },
               {
@@ -1216,6 +1563,33 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Full refunds are available if requested within 14 days of the charge date, starting from the most recent renewal charge for annual plans.",
+                "support": "knowledge base",
+                "evidence": "Charges are eligible for a full refund if the refund request is made within 14 days of the charge date. This applies to both monthly and annual billing cycles — for annual plans, the 14-day window starts from the most recent renewal charge, not the original signup date."
+              },
+              {
+                "claim": "Charges older than 14 days are not refundable except for duplicate or billing-error cases.",
+                "support": "knowledge base",
+                "evidence": "Charges older than 14 days are not refundable, except for the duplicate or billing-error case above."
+              },
+              {
+                "claim": "Cancellation steps are Settings > Billing > Cancel Subscription and confirm.",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Plan features remain active until the end of the current billing period and no future charges are scheduled.",
+                "support": "knowledge base",
+                "evidence": "Cancellation takes effect immediately in the sense that no future charges are scheduled, but your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Data is retained for 30 days after the billing period ends and then permanently deleted.",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
@@ -1224,9 +1598,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses all three customer questions, accurately applies the refund policy timeline, and provides clear instructions on cancellation and data retention.",
-            "improvements": "The tone is appropriate and empathetic, though it could briefly acknowledge that they forgot to cancel before the auto-renewal to make it feel a bit more personalized.",
-            "topSuggestion": "The reply is strong and sendable as-is; no major changes are required.",
+            "strengths": "The reply directly addresses every question asked by the customer, accurately cites the refund policy timeline, and provides clear instructions for both cancellation and data retention.",
+            "improvements": "The response is well-written and fully grounded, requiring no major changes.",
+            "topSuggestion": "Send the reply as-is since it is accurate, polite, and completely grounded in the knowledge base.",
             "riskFlags": [],
             "overallScore": 8.5
           }
@@ -1251,6 +1625,38 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Refunds are available within 14 days of the charge date, and for annual plans that window starts from the most recent renewal charge",
+                "support": "knowledge base",
+                "evidence": "Charges are eligible for a full refund if the refund request is made within 14 days of the charge date. This applies to both monthly and annual billing cycles — for annual plans, the 14-day window starts from the most recent renewal charge, not the original signup date."
+              },
+              {
+                "claim": "Your renewal was about six weeks ago, so it falls outside that window",
+                "support": "email",
+                "evidence": "My annual Pro plan auto-renewed about six weeks ago and I was charged $278.40."
+              },
+              {
+                "claim": "It isn't a duplicate or billing-error charge, which is the only exception",
+                "support": "knowledge base",
+                "evidence": "Charges older than 14 days are not refundable, except for the duplicate or billing-error case above."
+              },
+              {
+                "claim": "To cancel, go to Settings > Billing > Cancel Subscription and confirm",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "No future charges will be scheduled after that, and your plan features stay active until the end of the billing period you've already paid for",
+                "support": "knowledge base",
+                "evidence": "Cancellation takes effect immediately in the sense that no future charges are scheduled, but your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Your data (tickets, automation rules and integration connections) is retained for 30 days after the billing period ends, in case you decide to reactivate. After that it's permanently deleted and can't be recovered",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends, in case you want to reactivate. After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
@@ -1259,9 +1665,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses all parts of the customer's request, accurately applies the refund policy's 14-day window, and provides clear instructions on cancellation and data retention.",
-            "improvements": "The response is well-written and completely accurate based on the knowledge base; no major improvements are necessary.",
-            "topSuggestion": "None; the reply is ready to send.",
+            "strengths": "The reply directly answers all three customer inquiries, accurately applies the refund and cancellation policies from the knowledge base, and maintains a polite and empathetic tone.",
+            "improvements": "The reply is solid and fully grounded, requiring no major changes before sending.",
+            "topSuggestion": "Send the reply as-is since it accurately addresses all points using grounded policy details.",
             "riskFlags": [],
             "overallScore": 8.5
           }
@@ -1269,12 +1675,12 @@
         {
           "run": 3,
           "status": "ok",
-          "overallScore": 8.5,
+          "overallScore": 9.3,
           "band": "Ready to send",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Refund my annual renewal charge of $278.40",
+                "question": "Refund the annual renewal charge of $278.40",
                 "status": "answered"
               },
               {
@@ -1286,19 +1692,56 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Full refunds are available if requested within 14 days of the charge date",
+                "support": "knowledge base",
+                "evidence": "Charges are eligible for a full refund if the refund request is made within 14 days of the charge date."
+              },
+              {
+                "claim": "For annual plans, the 14-day refund window starts from the most recent renewal charge",
+                "support": "knowledge base",
+                "evidence": "for annual plans, the 14-day window starts from the most recent renewal charge, not the original signup date."
+              },
+              {
+                "claim": "Charges older than 14 days are not refundable except for duplicate or billing-error cases",
+                "support": "knowledge base",
+                "evidence": "Charges older than 14 days are not refundable, except for the duplicate or billing-error case above."
+              },
+              {
+                "claim": "To cancel, go to Settings > Billing > Cancel Subscription and confirm",
+                "support": "knowledge base",
+                "evidence": "Go to Settings > Billing > Cancel Subscription and confirm."
+              },
+              {
+                "claim": "Plan features remain active until the end of the current billing period",
+                "support": "knowledge base",
+                "evidence": "your plan features remain active until the end of the current billing period."
+              },
+              {
+                "claim": "Account data (tickets, automation rules, and integration connections) is retained for 30 days after the billing period ends",
+                "support": "knowledge base",
+                "evidence": "Your account data (tickets, automation rules, integration connections) is retained for 30 days after the billing period ends"
+              },
+              {
+                "claim": "After 30 days of inactivity on a cancelled account, data is permanently deleted and cannot be recovered",
+                "support": "knowledge base",
+                "evidence": "After 30 days of inactivity on a cancelled account, the data is permanently deleted and cannot be recovered."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
-              "relevance": 8,
-              "clarity": 8,
-              "completeness": 8,
-              "professionalism": 8,
+              "toneEmpathy": 9,
+              "relevance": 9,
+              "clarity": 9,
+              "completeness": 9,
+              "professionalism": 9,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses all parts of the customer's request, accurately applies the refund policy based on the 14-day window, and provides clear cancellation instructions and data retention details.",
-            "improvements": "The reply is solid and accurate; no major improvements are necessary.",
-            "topSuggestion": "None required, the draft is sendable as-is.",
+            "strengths": "The reply directly addresses every part of the customer's request, accurately applies the refund and cancellation policies from the knowledge base, and maintains an empathetic and professional tone.",
+            "improvements": "The reply is clear, complete, and fully grounded; no major improvements are necessary.",
+            "topSuggestion": "Send the reply as-is.",
             "riskFlags": [],
-            "overallScore": 8.5
+            "overallScore": 9.3
           }
         }
       ]
@@ -1309,7 +1752,7 @@
       "expectedSummary": "'Unsupported refund promise' and 'Unverified fix claim', groundedness <= 4, overall <= 4.9 (Do not send).",
       "status": "pass",
       "overallScores": [
-        3.5,
+        2.5,
         2.5,
         2.5
       ],
@@ -1364,7 +1807,7 @@
         {
           "run": 1,
           "status": "ok",
-          "overallScore": 3.5,
+          "overallScore": 2.5,
           "band": "Do not send as-is",
           "evaluation": {
             "customerQuestions": [
@@ -1377,32 +1820,49 @@
                 "status": "unanswered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "I've already refunded the duplicate payment to your card",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "you'll see it back within 24 hours",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "I've also fixed the billing glitch that caused it on our end, so this won't happen again",
+                "support": "unsupported",
+                "evidence": ""
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
+              "toneEmpathy": 7,
               "relevance": 5,
               "clarity": 8,
               "completeness": 3,
-              "professionalism": 7,
-              "groundedness": 2
+              "professionalism": 5,
+              "groundedness": 1
             },
-            "strengths": "The proposed reply uses a warm and friendly tone and offers a quick turnaround time.",
-            "improvements": "The agent falsely claimed to have processed the refund and fixed a bug, whereas the knowledge base requires the customer to provide charge details first and states that refunds take 5-10 business days.",
-            "topSuggestion": "Ask the customer for the charge date and amount as outlined in the refund policy, and correctly state the processing timeline of 5-10 business days.",
+            "strengths": "The reply maintains a polite, apologetic, and empathetic tone toward the customer.",
+            "improvements": "The agent hallucinates that a refund has already been issued and promises an incorrect timeline, while completely ignoring the required verification and correct refund timeline (5-10 business days) from the knowledge base.",
+            "topSuggestion": "Ask the customer for the charge date and amount to verify the duplicate, and inform them that approved refunds take 5-10 business days to appear on their card.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply promises an immediate refund and fixes without checking account history or following the verification process in the knowledge base."
+                "explanation": "The reply claims a refund has already been issued and promises it within 24 hours, which is unsupported."
               },
               {
                 "type": "Unverified fix claim",
-                "explanation": "The agent claims to have fixed a billing glitch on our end, which is not supported by any knowledge base excerpt."
+                "explanation": "The reply claims a billing glitch has been fixed on the backend, which is unsupported by the knowledge base."
               },
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply fails to provide the actual refund process and timeline requested by the customer, instead fabricating an incorrect status."
+                "explanation": "The reply fails to answer how long the refund will take according to company policy."
               }
             ],
-            "overallScore": 3.5
+            "overallScore": 2.5
           }
         },
         {
@@ -1414,40 +1874,53 @@
             "customerQuestions": [
               {
                 "question": "Can you refund the extra charge?",
-                "status": "partly answered"
+                "status": "unanswered"
               },
               {
                 "question": "How long will it take to show up on my card?",
                 "status": "unanswered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "I've already refunded the duplicate payment to your card",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "you'll see it back within 24 hours",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "I've also fixed the billing glitch that caused it on our end, so this won't happen again",
+                "support": "unsupported",
+                "evidence": ""
+              }
+            ],
             "scores": {
-              "toneEmpathy": 8,
+              "toneEmpathy": 7,
               "relevance": 5,
               "clarity": 8,
               "completeness": 3,
               "professionalism": 7,
               "groundedness": 1
             },
-            "strengths": "The reply uses a warm and polite tone and attempts to quickly address the customer's frustration.",
-            "improvements": "The agent hallucinates that the refund has already been processed and that a system glitch was fixed, violating the knowledge base policy which requires verifying duplicate charges and outlines a 5-10 business day timeline instead of 24 hours.",
-            "topSuggestion": "Remove the false promises that the refund has already been sent and the glitch fixed, ask the customer for the charge dates and amounts to verify the duplicate per the knowledge base, and provide the correct 5-10 business day timeline.",
+            "strengths": "The reply maintains a polite tone and expresses empathy for the billing issue.",
+            "improvements": "The agent hallucinates that a refund has already been issued and invents a 24-hour timeline and a system fix, completely bypassing the required verification and correct refund policy steps.",
+            "topSuggestion": "Remove the false claims about an issued refund and fixed glitch, and instead follow the knowledge base instructions to ask the customer for charge dates and amounts to verify the duplicate.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply claims the refund has already been processed without following the knowledge base verification process."
+                "explanation": "The agent claims a refund has already been issued, which is unsupported and violates the policy requiring verification first."
               },
               {
                 "type": "Unverified fix claim",
-                "explanation": "The agent claims they fixed the billing glitch, which is not supported by the knowledge base or company tools."
-              },
-              {
-                "type": "Invented policy or fact",
-                "explanation": "The reply states the refund will show up within 24 hours, whereas the knowledge base states 5-10 business days."
+                "explanation": "The agent claims to have fixed a billing glitch on the backend, which is completely unsupported."
               },
               {
                 "type": "Ignored customer's question",
-                "explanation": "The reply fails to correctly answer the timeline question, providing an incorrect timeframe instead."
+                "explanation": "The agent fails to answer the customer's questions about how long the refund will take according to policy and instead gives an unsupported timeline."
               }
             ],
             "overallScore": 2.5
@@ -1462,40 +1935,49 @@
             "customerQuestions": [
               {
                 "question": "Can you refund the extra charge?",
-                "status": "partly answered"
+                "status": "answered"
               },
               {
                 "question": "How long will it take to show up on my card?",
-                "status": "unanswered"
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "I've already refunded the duplicate payment to your card",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "you'll see it back within 24 hours",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "I've also fixed the billing glitch that caused it on our end",
+                "support": "unsupported",
+                "evidence": ""
               }
             ],
             "scores": {
-              "toneEmpathy": 7,
-              "relevance": 5,
+              "toneEmpathy": 8,
+              "relevance": 8,
               "clarity": 8,
-              "completeness": 4,
-              "professionalism": 7,
+              "completeness": 8,
+              "professionalism": 8,
               "groundedness": 1
             },
-            "strengths": "The reply is polite and expresses immediate empathy regarding the double charge.",
-            "improvements": "The agent hallucinates that a refund was already processed and a billing glitch was fixed, without asking for the required charge dates and amounts. It also misstates the refund timeline (claiming 24 hours instead of the 5-10 business days noted in the knowledge base).",
-            "topSuggestion": "Remove the false claims about the refund being processed and the bug being fixed, ask the customer for the charge dates and amounts to verify the duplicate, and provide the correct timeline of 5-10 business days.",
+            "strengths": "The reply uses a warm, empathetic tone and directly addresses both questions asked by the customer.",
+            "improvements": "The agent makes fabrications by claiming a refund has already been issued and providing an incorrect refund timeline (24 hours instead of 5-10 business days per the policy) as well as inventing a backend fix claim.",
+            "topSuggestion": "Remove the claims about already issuing the refund and fixing the bug, and instead follow the knowledge base instructions to verify the duplicate charge and state the correct 5-10 business day refund timeline.",
             "riskFlags": [
               {
                 "type": "Unsupported refund promise",
-                "explanation": "The reply claims a refund has already been issued before verifying the duplicate charge against the policy requirements."
+                "explanation": "The reply claims the refund has already been sent and will appear in 24 hours, which is unsupported and contradicts the knowledge base timeline of 5-10 business days."
               },
               {
                 "type": "Unverified fix claim",
-                "explanation": "The agent claims to have fixed a billing glitch on their end, which is unsupported and fabricated."
-              },
-              {
-                "type": "Invented policy or fact",
-                "explanation": "The reply states the refund will show up within 24 hours, whereas the knowledge base states 5-10 business days."
-              },
-              {
-                "type": "Ignored customer's question",
-                "explanation": "The reply fails to correctly answer how long the refund takes according to company policy."
+                "explanation": "The reply claims a billing glitch on the backend has been fixed, which is not supported by the knowledge base."
               }
             ],
             "overallScore": 2.5
@@ -1586,6 +2068,33 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "You can confirm what happened under Settings > Billing > Invoice History",
+                "support": "knowledge base",
+                "evidence": "Check Settings > Billing > Invoice History first"
+              },
+              {
+                "claim": "if you see two charges of the same amount on the same day with no plan change, that's a duplicate charge.",
+                "support": "knowledge base",
+                "evidence": "if you see two charges of the same amount on the same day with no plan change, that's a duplicate charge."
+              },
+              {
+                "claim": "Duplicate charges caused by a billing error are refunded in full, regardless of our usual 14-day refund window, as soon as we confirm the duplicate.",
+                "support": "knowledge base",
+                "evidence": "Duplicate charges caused by a billing system error are refunded in full regardless of the 14-day window, as soon as the duplicate is confirmed."
+              },
+              {
+                "claim": "To verify it, could you reply with the dates and amounts of both charges?",
+                "support": "knowledge base",
+                "evidence": "Contact support with the charge dates and amounts so the team can verify the duplicate before issuing the refund."
+              },
+              {
+                "claim": "Once the refund is approved, it's returned to your original payment method within 5-10 business days, depending on your bank.",
+                "support": "knowledge base",
+                "evidence": "approved refunds are returned to the original payment method within 5-10 business days, depending on your bank."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
@@ -1594,9 +2103,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply accurately explains how to check invoice history, clearly outlines the refund process based on the knowledge base, and addresses both of the customer's questions.",
-            "improvements": "It is well-written and fully grounded, so no major improvements are needed.",
-            "topSuggestion": "The reply is solid and can be sent as-is.",
+            "strengths": "The reply directly addresses both of the customer's questions using exact information from the knowledge base, providing clear steps for verification and accurate timelines for the refund.",
+            "improvements": "None needed; the response is completely accurate, empathetic, and strictly grounded in the knowledge base.",
+            "topSuggestion": "Send the reply as-is.",
             "riskFlags": [],
             "overallScore": 8.5
           }
@@ -1617,6 +2126,18 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Duplicate charges caused by a billing error are refunded in full regardless of the 14-day window as soon as confirmed",
+                "support": "knowledge base",
+                "evidence": "Duplicate charges caused by a billing system error are refunded in full regardless of the 14-day window, as soon as the duplicate is confirmed."
+              },
+              {
+                "claim": "Approved refunds are returned to the original payment method within 5-10 business days depending on the bank",
+                "support": "knowledge base",
+                "evidence": "approved refunds are returned to the original payment method within 5-10 business days, depending on your bank."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
@@ -1625,9 +2146,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply accurately explains how to check invoice history for a duplicate charge, outlines the refund policy clearly, and directly answers both questions about refunds and timelines.",
-            "improvements": "No meaningful improvements are needed; the reply is accurate, empathetic, and fully grounded in the knowledge base.",
-            "topSuggestion": "None required.",
+            "strengths": "The reply directly addresses both of the customer's questions using exact information from the knowledge base, providing a clear explanation of how to check for a duplicate charge and what the refund timeline is.",
+            "improvements": "The reply is solid and accurate; no significant improvements are needed.",
+            "topSuggestion": "Send the reply as drafted.",
             "riskFlags": [],
             "overallScore": 8.5
           }
@@ -1648,6 +2169,18 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Duplicate charges caused by a billing error are refunded in full regardless of the 14-day window as soon as confirmed.",
+                "support": "knowledge base",
+                "evidence": "Duplicate charges caused by a billing system error are refunded in full regardless of the 14-day window, as soon as the duplicate is confirmed."
+              },
+              {
+                "claim": "Approved refunds are returned to the original payment method within 5-10 business days, depending on your bank.",
+                "support": "knowledge base",
+                "evidence": "approved refunds are returned to the original payment method within 5-10 business days, depending on your bank."
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
@@ -1656,9 +2189,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses both of the customer's questions using exact information from the knowledge base, offering a clear path to verify the duplicate charge and explaining the timeline for the refund.",
-            "improvements": "No meaningful improvements are needed as the reply is completely accurate, empathetic, and fully addresses the customer's concerns.",
-            "topSuggestion": "Send as-is; no changes are required.",
+            "strengths": "The reply directly answers both customer questions with accurate information from the knowledge base and maintains a supportive tone.",
+            "improvements": "The reply is clear and well-written, but strictly follows the knowledge base without additional distinct strengths.",
+            "topSuggestion": "None needed as the reply is solid and fully grounded.",
             "riskFlags": [],
             "overallScore": 8.5
           }
@@ -1671,7 +2204,7 @@
       "expectedSummary": "'Inappropriate tone' flag, toneEmpathy <= 3, professionalism <= 4, groundedness >= 7, no critical flags, overall 2.0–5.5.",
       "status": "pass",
       "overallScores": [
-        2.5,
+        3.5,
         2.5,
         2.5
       ],
@@ -1753,33 +2286,50 @@
         {
           "run": 1,
           "status": "ok",
-          "overallScore": 2.5,
+          "overallScore": 3.5,
           "band": "Do not send as-is",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox not pulling in new emails.",
+                "question": "Fix the shared inbox syncing issue today",
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Go to Settings > Integrations and check whether your email connection still says Connected",
+                "support": "knowledge base",
+                "evidence": "First check Settings > Integrations to confirm the email connection still shows \"Connected\""
+              },
+              {
+                "claim": "Reauthorize the email connection, which is usually needed after someone changes the password on the connected mailbox",
+                "support": "knowledge base",
+                "evidence": "integrations occasionally need to be reauthorized after the email provider revokes access (common after a password change on the connected mailbox)"
+              },
+              {
+                "claim": "New emails can take up to 15 minutes to show up, which is normal",
+                "support": "knowledge base",
+                "evidence": "New emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior, not a fault."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 1,
+              "toneEmpathy": 2,
               "relevance": 8,
-              "clarity": 8,
+              "clarity": 7,
               "completeness": 8,
-              "professionalism": 1,
+              "professionalism": 2,
               "groundedness": 10
             },
-            "strengths": "The reply correctly uses the troubleshooting steps from the knowledge base to address the inbox syncing issue.",
-            "improvements": "The tone is extremely rude, adversarial, and unprofessional, which will severely damage customer trust.",
-            "topSuggestion": "Rewrite the entire message in a polite, empathetic, and professional tone while keeping the troubleshooting steps.",
+            "strengths": "The reply directly addresses the technical issue using the correct troubleshooting steps from the knowledge base.",
+            "improvements": "The tone is aggressive, dismissive, and entirely unprofessional, scolding the customer for writing multiple times.",
+            "topSuggestion": "Rewrite the reply to maintain a polite, empathetic, and professional customer service tone while providing the necessary troubleshooting steps.",
             "riskFlags": [
               {
                 "type": "Inappropriate tone",
-                "explanation": "The agent is confrontational, dismissive, and rude to the frustrated customer."
+                "explanation": "The agent scolds the customer and uses hostile language such as 'Honestly, emailing three times won't make this go any faster' and 'please don't report that as a fault.'"
               }
             ],
-            "overallScore": 2.5
+            "overallScore": 3.5
           }
         },
         {
@@ -1794,21 +2344,38 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "Go to Settings > Integrations to check whether your email connection still says Connected",
+                "support": "knowledge base",
+                "evidence": "First check Settings > Integrations to confirm the email connection still shows \"Connected\""
+              },
+              {
+                "claim": "Reauthorize the email connection, which is usually needed after someone changes the password on the connected mailbox",
+                "support": "knowledge base",
+                "evidence": "integrations occasionally need to be reauthorized after the email provider revokes access (common after a password change on the connected mailbox)"
+              },
+              {
+                "claim": "New emails can take up to 15 minutes to show up, which is normal",
+                "support": "knowledge base",
+                "evidence": "New emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior, not a fault"
+              }
+            ],
             "scores": {
               "toneEmpathy": 1,
               "relevance": 8,
-              "clarity": 7,
+              "clarity": 8,
               "completeness": 8,
               "professionalism": 1,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses the technical troubleshooting steps for the shared inbox syncing issue as outlined in the knowledge base.",
-            "improvements": "The tone is completely unprofessional, hostile, and condescending, which will severely damage customer trust especially given the customer's frustration.",
-            "topSuggestion": "Rewrite the entire message in a polite, empathetic, and professional tone while retaining the correct troubleshooting steps.",
+            "strengths": "The reply directly addresses the technical issue using steps and explanations pulled directly from the knowledge base.",
+            "improvements": "The tone is extremely harsh, condescending, and unprofessional ('Honestly, emailing three times won't make this go any faster', 'please don't report that as a fault'). It completely lacks empathy for an urgent customer.",
+            "topSuggestion": "Rewrite the reply to remove the aggressive and scolding language, adopting a polite, helpful, and empathetic tone while keeping the troubleshooting steps.",
             "riskFlags": [
               {
                 "type": "Inappropriate tone",
-                "explanation": "The reply uses hostile, scolding language (\"Honestly, emailing three times won't make this go any faster\") that is entirely inappropriate for customer support."
+                "explanation": "The reply uses hostile, scolding language (\"Honestly, emailing three times won't make this go any faster\", \"please don't report that as a fault\") that is entirely inappropriate for customer support."
               }
             ],
             "overallScore": 2.5
@@ -1822,25 +2389,42 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox that hasn't pulled in any new emails since yesterday.",
-                "status": "answered"
+                "question": "Fix the shared inbox syncing issue today.",
+                "status": "partly answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Go to Settings > Integrations and check whether your email connection still says 'Connected'.",
+                "support": "knowledge base",
+                "evidence": "First check Settings > Integrations to confirm the email connection still shows \"Connected\""
+              },
+              {
+                "claim": "Reauthorize the email connection, which is usually needed after someone changes the password on the connected mailbox.",
+                "support": "knowledge base",
+                "evidence": "integrations occasionally need to be reauthorized after the email provider revokes access (common after a password change on the connected mailbox)."
+              },
+              {
+                "claim": "New emails can take up to 15 minutes to show up, which is normal.",
+                "support": "knowledge base",
+                "evidence": "New emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior, not a fault."
               }
             ],
             "scores": {
               "toneEmpathy": 1,
               "relevance": 8,
-              "clarity": 7,
+              "clarity": 8,
               "completeness": 8,
               "professionalism": 1,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses the technical troubleshooting steps from the knowledge base for a shared inbox sync issue.",
-            "improvements": "The tone is hostile, dismissive, and completely lacks empathy or professionalism, which will severely damage customer trust.",
-            "topSuggestion": "Rewrite the entire message to adopt a polite, empathetic, and professional support tone while retaining the correct technical troubleshooting steps.",
+            "strengths": "The reply directly addresses the technical issue using accurate steps from the knowledge base.",
+            "improvements": "The tone is overly harsh, confrontational, and unprofessional, which will damage customer relations further.",
+            "topSuggestion": "Rewrite the reply to adopt a polite, empathetic, and professional tone while retaining the troubleshooting steps from the knowledge base.",
             "riskFlags": [
               {
                 "type": "Inappropriate tone",
-                "explanation": "The agent's reply is overtly hostile, condescending, and scolds the customer for writing multiple times."
+                "explanation": "The reply uses hostile, scolding language (\"Honestly, emailing three times won't make this go any faster. This is basic setup.\") that is unprofessional and alienates the customer."
               }
             ],
             "overallScore": 2.5
@@ -1854,9 +2438,9 @@
       "expectedSummary": "No critical flags, overall 7.5–9.0.",
       "status": "pass",
       "overallScores": [
-        7.8,
         8.5,
-        8.9
+        8.5,
+        8.5
       ],
       "checks": [
         {
@@ -1909,28 +2493,40 @@
         {
           "run": 1,
           "status": "ok",
-          "overallScore": 7.8,
-          "band": "Needs revision",
+          "overallScore": 8.5,
+          "band": "Ready to send",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the inbox syncing issue today",
-                "status": "partly answered"
+                "question": "Fix the shared inbox not pulling in new emails today.",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Most common cause of a shared inbox that stops receiving new emails is the email integration losing access.",
+                "support": "knowledge base",
+                "evidence": "First check Settings > Integrations to confirm the email connection still shows \"Connected\" — integrations occasionally need to be reauthorized after the email provider revokes access"
+              },
+              {
+                "claim": "New emails can take up to 15 minutes to appear, which is normal sync delay.",
+                "support": "knowledge base",
+                "evidence": "New emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior, not a fault."
               }
             ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
               "clarity": 8,
-              "completeness": 7,
+              "completeness": 8,
               "professionalism": 8,
-              "groundedness": 8
+              "groundedness": 10
             },
-            "strengths": "The reply directly addresses the customer's frustration by acknowledging past attempts to reach out and providing exact, knowledge-base-backed troubleshooting steps.",
-            "improvements": "The agent promises to check back by the end of the day, which assumes the customer will reply immediately and that the issue will be resolved within that timeframe, though the KB doesn't guarantee a timeline for resolving connection faults.",
-            "topSuggestion": "Remove the firm promise to check back by the end of the day unless that is guaranteed by support SLA.",
+            "strengths": "The reply directly addresses the customer's technical issue using the exact troubleshooting steps from the knowledge base and demonstrates good empathy for the urgent situation.",
+            "improvements": "No meaningful improvements are needed as the reply is accurate, fully grounded, and directly resolves the customer's issue.",
+            "topSuggestion": "Send the reply as-is.",
             "riskFlags": [],
-            "overallScore": 7.8
+            "overallScore": 8.5
           }
         },
         {
@@ -1941,8 +2537,20 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox not pulling in new emails",
+                "question": "Fix the shared inbox syncing issue today.",
                 "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "The most common cause of a shared inbox that stops receiving new emails is the email integration losing access.",
+                "support": "knowledge base",
+                "evidence": "First check Settings > Integrations to confirm the email connection still shows \"Connected\" — integrations occasionally need to be reauthorized after the email provider revokes access (common after a password change on the connected mailbox)."
+              },
+              {
+                "claim": "New emails can take up to 15 minutes to appear, which is normal sync delay.",
+                "support": "knowledge base",
+                "evidence": "New emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior, not a fault."
               }
             ],
             "scores": {
@@ -1953,9 +2561,9 @@
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses the core issue using exact troubleshooting steps from the knowledge base and acknowledges the customer's frustration regarding repeat contacts.",
-            "improvements": "The agent sets a clear expectation to check back by end of day, which is good, but could have explicitly addressed the urgency by advising on what to do if the integration shows connected.",
-            "topSuggestion": "Ensure that if the issue persists despite the integration showing connected, a clear workaround or escalation path is provided.",
+            "strengths": "The reply directly addresses the customer's urgent shared inbox issue using exact troubleshooting steps from the knowledge base, while matching the customer's frustration with appropriate empathy.",
+            "improvements": "No meaningful improvements are needed as the reply is fully grounded, accurate, and completely resolves the customer's stated issue.",
+            "topSuggestion": "Send the reply as-is.",
             "riskFlags": [],
             "overallScore": 8.5
           }
@@ -1963,28 +2571,45 @@
         {
           "run": 3,
           "status": "ok",
-          "overallScore": 8.9,
+          "overallScore": 8.5,
           "band": "Ready to send",
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "Fix the shared inbox syncing issue today",
+                "question": "Fix the shared inbox not pulling in new emails.",
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "First check Settings > Integrations to confirm the email connection still shows \"Connected\"",
+                "support": "knowledge base",
+                "evidence": "First check Settings > Integrations to confirm the email connection still shows \"Connected\""
+              },
+              {
+                "claim": "Integrations occasionally need to be reauthorized after the email provider revokes access (common after a password change on the connected mailbox)",
+                "support": "knowledge base",
+                "evidence": "integrations occasionally need to be reauthorized after the email provider revokes access (common after a password change on the connected mailbox)."
+              },
+              {
+                "claim": "New emails can take up to 15 minutes to appear during normal sync delay",
+                "support": "knowledge base",
+                "evidence": "New emails can also take up to 15 minutes to appear during normal sync delay, which is expected behavior, not a fault."
+              }
+            ],
             "scores": {
-              "toneEmpathy": 9,
-              "relevance": 9,
+              "toneEmpathy": 8,
+              "relevance": 8,
               "clarity": 8,
               "completeness": 8,
               "professionalism": 8,
               "groundedness": 10
             },
-            "strengths": "The reply directly addresses the core issue using exact troubleshooting steps from the knowledge base, shows strong empathy for the repeated contact and urgency, and commits to a specific follow-up timeline.",
-            "improvements": "The reply is exceptionally well-aligned with the knowledge base and customer situation; only minor phrasing refinements could be made, but none are strictly necessary.",
-            "topSuggestion": "The reply is solid and sendable as-is.",
+            "strengths": "The reply directly addresses the customer's syncing issue using exact troubleshooting steps from the knowledge base and demonstrates good empathy for the frustration.",
+            "improvements": "No significant improvements needed; the response is accurate, grounded, and helpful.",
+            "topSuggestion": "Send as-is.",
             "riskFlags": [],
-            "overallScore": 8.9
+            "overallScore": 8.5
           }
         }
       ]
@@ -1996,8 +2621,8 @@
       "status": "pass",
       "overallScores": [
         4.9,
-        4.9,
-        4.9
+        2.5,
+        2.5
       ],
       "checks": [
         {
@@ -2058,21 +2683,48 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "A downgrade takes effect at the start of your next billing period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "You keep all your Business features until then.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "There's no partial refund for downgrading mid-period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Single sign-on is a Business plan feature and isn't included in Pro",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Pro includes up to 5 user seats, compared with up to 20 on Business.",
+                "support": "unsupported",
+                "evidence": ""
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
               "clarity": 9,
-              "completeness": 9,
+              "completeness": 8,
               "professionalism": 8,
               "groundedness": 4
             },
-            "strengths": "The reply clearly and directly answers all three customer questions using a well-organized bulleted list, and usefully anticipates the seat limit change.",
-            "improvements": "However, since there were no knowledge base excerpts provided to verify company policies on downgrades, refunds, and SSO, the specific policy claims cannot be verified against the source of truth.",
-            "topSuggestion": "Ensure that company policy details regarding downgrades, refunds, and feature losses are backed by verified knowledge base documentation.",
+            "strengths": "The reply directly answers all of the customer's questions in a clear, well-structured format and anticipates relevant follow-up details about plan differences.",
+            "improvements": "Since no knowledge base excerpts were provided to support the company-specific claims about billing, refunds, and plan features, the response includes unsupported policy and feature claims.",
+            "topSuggestion": "Verify all refund policies, billing timelines, and plan limits against the knowledge base or internal documentation, and remove or qualify any claims not supported by the available source material.",
             "riskFlags": [
               {
                 "type": "Invented policy or fact",
-                "explanation": "The reply details specific policies on downgrade timing, refunds, and feature losses without supporting knowledge base excerpts or evidence in the customer email."
+                "explanation": "The reply makes unsupported claims regarding billing timelines, refund rules, and plan feature limitations without supporting knowledge base excerpts or email source text."
               }
             ],
             "overallScore": 4.9
@@ -2081,7 +2733,7 @@
         {
           "run": 2,
           "status": "ok",
-          "overallScore": 4.9,
+          "overallScore": 2.5,
           "band": "Do not send as-is",
           "evaluation": {
             "customerQuestions": [
@@ -2098,21 +2750,292 @@
                 "status": "answered"
               }
             ],
+            "companyClaims": [
+              {
+                "claim": "A downgrade takes effect at the start of your next billing period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "You keep all your Business features until the next billing period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "There's no partial refund for downgrading mid-period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Single sign-on is a Business plan feature and isn't included in Pro, so you'll lose SSO.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Pro includes up to 5 user seats, compared with up to 20 on Business.",
+                "support": "unsupported",
+                "evidence": ""
+              }
+            ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
-              "clarity": 9,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 1
+            },
+            "strengths": "The reply directly addresses all three questions clearly and logically.",
+            "improvements": "The reply makes multiple factual and policy claims about plan features, billing timelines, and refunds while the knowledge base excerpts are completely empty.",
+            "topSuggestion": "Verify all plan features, upgrade/downgrade rules, and refund policies against the knowledge base or internal documentation before sending.",
+            "riskFlags": [
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply makes multiple unsupported claims regarding billing timelines, refund policies, and plan feature limitations without supporting knowledge base excerpts or email source text."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 2.5,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "When does the downgrade take effect?",
+                "status": "answered"
+              },
+              {
+                "question": "Do we get a partial refund for the rest of this month?",
+                "status": "answered"
+              },
+              {
+                "question": "Will we lose SSO?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "A downgrade takes effect at the start of your next billing period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "You keep all your Business features until the next billing period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "There's no partial refund for downgrading mid-period.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Single sign-on is a Business plan feature and isn't included in Pro.",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Pro includes up to 5 user seats, compared with up to 20 on Business.",
+                "support": "unsupported",
+                "evidence": ""
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 1
+            },
+            "strengths": "The reply directly addresses all three questions asked by the customer and maintains a polite, helpful tone.",
+            "improvements": "The agent includes multiple company-specific claims and policies regarding plan features, billing timelines, and refunds that are entirely unsupported since the knowledge base excerpts are empty.",
+            "topSuggestion": "Remove or verify all specific policy and feature claims since no knowledge base excerpts were provided to support them, or explain to the customer that you need to check with the team.",
+            "riskFlags": [
+              {
+                "type": "Invented policy or fact",
+                "explanation": "The reply makes multiple unsupported claims about billing timelines, refund policies, and plan feature differences without knowledge base support."
+              }
+            ],
+            "overallScore": 2.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-13",
+      "failureMode": "Unsupported claim about an undocumented policy",
+      "expectedSummary": "'Invented policy or fact', groundedness <= 4, overall <= 4.9 (Do not send). The 'no cap' claim has no support in the email or knowledge base.",
+      "status": "fail",
+      "overallScores": [
+        7.7,
+        4.9,
+        4.9
+      ],
+      "checks": [
+        {
+          "description": "flag present: Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The knowledge base never mentions an automation-rule limit, so 'no cap' / 'unlimited' is an invented policy.",
+          "passedRuns": 2,
+          "requiredRuns": 3,
+          "passed": false
+        },
+        {
+          "description": "groundedness <= 4",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps groundedness at 4 once a critical flag is raised (unsupported claim about an undocumented limit).",
+          "passedRuns": 2,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 4.9",
+          "backing": "code",
+          "severity": "must",
+          "why": "Code caps overall at 4.9 once a critical flag is raised (unsupported claim about an undocumented limit).",
+          "passedRuns": 2,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Do not send as-is]",
+          "backing": "code",
+          "severity": "must",
+          "why": "Follows from the 4.9 critical-flag cap.",
+          "passedRuns": 2,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 7.7,
+          "band": "Needs revision",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Is there a cap on how many automation rules we can create on the Pro plan?",
+                "status": "answered"
+              },
+              {
+                "question": "If we outgrow Pro, what does the next plan up add?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "There's no cap on the number of automation rules on the Pro plan",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats, unlimited tickets, a shared inbox with automation rules"
+              },
+              {
+                "claim": "If you outgrow Pro, the next plan up is Business at $79/month",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month"
+              },
+              {
+                "claim": "It includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats, and a dedicated account manager",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              },
+              {
+                "claim": "Pro includes 5 user seats",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              },
+              {
+                "claim": "Upgrading takes effect immediately, and you're charged a prorated amount for the rest of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period."
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 7
+            },
+            "strengths": "The reply directly answers both questions with precise details from the knowledge base, including exact pricing and feature comparisons for the next plan.",
+            "improvements": "The knowledge base states Pro includes \"a shared inbox with automation rules\" rather than explicitly stating automation rules are unlimited (unlike tickets which are explicitly listed as \"unlimited tickets\"). Claiming they are completely uncapped extrapolates slightly from the text.",
+            "topSuggestion": "Clarify that the Pro plan includes automation rules via the shared inbox without explicitly stating they are unlimited, to stay strictly within the knowledge base wording.",
+            "riskFlags": [],
+            "overallScore": 7.7
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 4.9,
+          "band": "Do not send as-is",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Is there a cap on how many automation rules we can create on the Pro plan?",
+                "status": "partly answered"
+              },
+              {
+                "question": "If we outgrow Pro, what does the next plan up add?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "There's no cap on the number of automation rules on the Pro plan",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Like tickets, automation rules are unlimited on Pro",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "Business plan is $79/month",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month"
+              },
+              {
+                "claim": "Business plan includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats, and a dedicated account manager",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              },
+              {
+                "claim": "Pro plan includes 5 user seats",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              },
+              {
+                "claim": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period."
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
               "completeness": 8,
               "professionalism": 8,
               "groundedness": 4
             },
-            "strengths": "The reply clearly and directly answers all three customer questions using a well-organized bulleted list, and anticipates an important feature limit change regarding user seats.",
-            "improvements": "Since there were no knowledge base excerpts provided, all company policies regarding billing, downgrades, and feature limits are technically unverified by the provided source of truth.",
-            "topSuggestion": "Ensure that the billing, refund, and feature restriction policies stated in the reply are verified against internal company guidelines.",
+            "strengths": "The reply directly addresses both of the customer's questions, clearly detailing the Business plan features and pricing as retrieved from the knowledge base.",
+            "improvements": "The knowledge base states that Pro includes \"a shared inbox with automation rules\" but does not state that automation rules are unlimited or that there is no cap. The agent should acknowledge that Pro includes automation rules without inventing a \"no cap\" or \"unlimited\" rule.",
+            "topSuggestion": "Remove the claim that automation rules are unlimited or uncapped on the Pro plan, since the knowledge base does not state this.",
             "riskFlags": [
               {
                 "type": "Invented policy or fact",
-                "explanation": "The reply makes specific company-specific claims regarding downgrade timelines, refund policies, and feature limits that are not supported by the provided knowledge base excerpts."
+                "explanation": "The reply states there is no cap and automation rules are unlimited on Pro, but this is not supported by the knowledge base."
               }
             ],
             "overallScore": 4.9
@@ -2126,36 +3049,307 @@
           "evaluation": {
             "customerQuestions": [
               {
-                "question": "When does the downgrade take effect?",
-                "status": "answered"
+                "question": "Is there a cap on how many automation rules we can create on the Pro plan?",
+                "status": "partly answered"
               },
               {
-                "question": "Do we get a partial refund for the rest of this month?",
+                "question": "If we outgrow Pro, what does the next plan up add?",
                 "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "There is no cap on the number of automation rules on the Pro plan",
+                "support": "unsupported",
+                "evidence": ""
               },
               {
-                "question": "Will we lose SSO?",
-                "status": "answered"
+                "claim": "Like tickets, automation rules are unlimited on Pro",
+                "support": "unsupported",
+                "evidence": ""
+              },
+              {
+                "claim": "The next plan up is Business at $79/month",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month"
+              },
+              {
+                "claim": "It includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats, and a dedicated account manager",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              },
+              {
+                "claim": "Up on Pro, user seats are 5",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              },
+              {
+                "claim": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period."
               }
             ],
             "scores": {
               "toneEmpathy": 8,
               "relevance": 8,
-              "clarity": 9,
-              "completeness": 9,
+              "clarity": 8,
+              "completeness": 7,
               "professionalism": 8,
               "groundedness": 4
             },
-            "strengths": "The reply clearly and directly answers all three customer questions using a well-organized bulleted list, and usefully anticipates the change in user seat limits.",
-            "improvements": "However, since no knowledge base excerpts were provided to support the specific claims about downgrade timing, refund rules, SSO, and seat limits, these company-specific facts are technically ungrounded based on the provided source materials.",
-            "topSuggestion": "Ensure that all company policies mentioned regarding downgrades, refunds, and feature access are verified against internal documentation if no KB article was retrieved.",
+            "strengths": "The reply directly addresses both parts of the customer's inquiry and accurately details the features, pricing, and upgrade terms of the Business plan based on the knowledge base.",
+            "improvements": "The knowledge base states that Pro includes a 'shared inbox with automation rules', but it does not explicitly state that automation rules are unlimited in quantity, making that specific claim unsupported.",
+            "topSuggestion": "Remove the claim that automation rules are unlimited on Pro since the knowledge base does not state a limit either way.",
             "riskFlags": [
               {
                 "type": "Invented policy or fact",
-                "explanation": "The reply details specific company policies regarding downgrade timing, refund rules, SSO, and seat limits that are not supported by the retrieved knowledge base excerpts or the customer email."
+                "explanation": "The reply states that there is no cap and automation rules are unlimited on the Pro plan, but the knowledge base only mentions that Pro includes 'a shared inbox with automation rules' without addressing whether the number of rules is capped."
               }
             ],
             "overallScore": 4.9
+          }
+        }
+      ]
+    },
+    {
+      "id": "BM-14",
+      "failureMode": "None — honest answer when the policy is undocumented",
+      "expectedSummary": "No critical flags, groundedness >= 8, no question 'unanswered' (the limit question may be 'partly answered'), overall 7.0–9.0.",
+      "status": "pass",
+      "overallScores": [
+        8.5,
+        8.5,
+        8.5
+      ],
+      "checks": [
+        {
+          "description": "flags absent: Unsupported refund promise, Unverified fix claim, Invented policy or fact",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Reply makes no fabricated claim; any critical flag is a false positive.",
+          "passedRuns": 3,
+          "requiredRuns": 3,
+          "passed": true
+        },
+        {
+          "description": "groundedness >= 8",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Every company fact is in the chunks; saying the limit isn't documented is not a claim about the limit.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "no question is unanswered",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "The limit question is addressed honestly, not ignored.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall >= 7",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Correct, grounded handling of missing information.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "overall <= 9",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Guards against inflation.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        },
+        {
+          "description": "band in [Ready to send | Needs revision]",
+          "backing": "prompt",
+          "severity": "must",
+          "why": "Follows from 7.0–9.0.",
+          "passedRuns": 3,
+          "requiredRuns": 2,
+          "passed": true
+        }
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Is there a cap on how many automation rules we can create on the Pro plan?",
+                "status": "partly answered"
+              },
+              {
+                "question": "If we outgrow Pro, what does the next plan up add?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Pro plan includes a shared inbox with automation rules",
+                "support": "knowledge base",
+                "evidence": "a shared inbox with automation rules"
+              },
+              {
+                "claim": "Next plan up is Business at $79/month",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month"
+              },
+              {
+                "claim": "Business includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats, and a dedicated account manager",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              },
+              {
+                "claim": "Pro includes up to 5 user seats",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              },
+              {
+                "claim": "Upgrading takes effect immediately, and you're charged a prorated amount for the rest of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period."
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The reply handles the unconfirmed limit honestly by stating it will check with the team, and accurately outlines the features and pricing of the Business plan.",
+            "improvements": "The agent should ensure all stated facts are fully grounded without unnecessary meta-commentary about documentation.",
+            "topSuggestion": "Remove the meta-commentary about the plan documentation not stating a maximum number of rules, and simply state that you will check with the team and follow up.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 2,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Is there a cap on how many automation rules we can create?",
+                "status": "partly answered"
+              },
+              {
+                "question": "If we outgrow Pro, what does the next plan up add?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Pro includes a shared inbox with automation rules",
+                "support": "knowledge base",
+                "evidence": "a shared inbox with automation rules"
+              },
+              {
+                "claim": "Business plan is $79/month",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month"
+              },
+              {
+                "claim": "Business includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats, and a dedicated account manager",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              },
+              {
+                "claim": "Pro includes up to 5 user seats",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              },
+              {
+                "claim": "Upgrading takes effect immediately, and you're charged a prorated amount for the rest of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period."
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The agent handled the missing rule limit honestly by stating it wasn't documented and offering to follow up, while accurately answering the plan upgrade question using knowledge base details.",
+            "improvements": "Ensure that the follow-up on the rule limit is handled internally before sending, or phrase the limitation check smoothly without leaving the first question partially unresolved.",
+            "topSuggestion": "Confirm the automation rule limit internally so you can provide a complete answer rather than promising a follow-up.",
+            "riskFlags": [],
+            "overallScore": 8.5
+          }
+        },
+        {
+          "run": 3,
+          "status": "ok",
+          "overallScore": 8.5,
+          "band": "Ready to send",
+          "evaluation": {
+            "customerQuestions": [
+              {
+                "question": "Is there a cap on how many automation rules we can create on the Pro plan?",
+                "status": "partly answered"
+              },
+              {
+                "question": "If we outgrow Pro, what does the next plan up add?",
+                "status": "answered"
+              }
+            ],
+            "companyClaims": [
+              {
+                "claim": "Pro includes a shared inbox with automation rules",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats, unlimited tickets, a shared inbox with automation rules"
+              },
+              {
+                "claim": "The next plan up is Business at $79/month",
+                "support": "knowledge base",
+                "evidence": "Business — $79/month"
+              },
+              {
+                "claim": "Business includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats, and a dedicated account manager",
+                "support": "knowledge base",
+                "evidence": "Includes up to 20 user seats, everything in Pro, advanced automation rules, single sign-on (SSO), and a dedicated account manager."
+              },
+              {
+                "claim": "Pro includes up to 5 user seats",
+                "support": "knowledge base",
+                "evidence": "Includes up to 5 user seats"
+              },
+              {
+                "claim": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period",
+                "support": "knowledge base",
+                "evidence": "Upgrading takes effect immediately and you're charged a prorated amount for the rest of the current billing period."
+              }
+            ],
+            "scores": {
+              "toneEmpathy": 8,
+              "relevance": 8,
+              "clarity": 8,
+              "completeness": 8,
+              "professionalism": 8,
+              "groundedness": 10
+            },
+            "strengths": "The agent handled the missing documentation honestly by promising to check with the team, and accurately detailed the pricing, features, and upgrade terms for the Business plan.",
+            "improvements": "Ensure all company claims are fully supported, or keep the follow-up concise without guessing about documentation wording.",
+            "topSuggestion": "Remove the commentary about what the documentation does or does not state, and simply state that you will check on the exact limits and follow up.",
+            "riskFlags": [],
+            "overallScore": 8.5
           }
         }
       ]

@@ -1,11 +1,11 @@
-// Evaluator benchmark: 12 hand-written cases that test lib/ai/evaluate.ts —
+// Evaluator benchmark: 14 hand-written cases that test lib/ai/evaluate.ts —
 // NOT the generation model. Every case fixes the email, the sentiment/
 // urgency, the retrieved knowledge chunks, and a deliberately written reply,
 // so the evaluator is the only moving part. Run with
 // `npm run benchmark:evaluator` (scripts/benchmark-evaluator.ts).
 //
 // Design:
-// - Four customer emails (E-A..E-D), several replies each, so score
+// - Five customer emails (E-A..E-E), several replies each, so score
 //   differences between cases on the same email are attributable to the
 //   reply alone (same idea as lib/data/sample-evaluations.ts).
 // - Knowledge chunks are FROZEN verbatim copies of chunks from
@@ -76,7 +76,7 @@ export type BenchmarkCase = {
   id: string;
   failureMode: string;
   purpose: string;
-  scenario: "E-A" | "E-B" | "E-C" | "E-D";
+  scenario: "E-A" | "E-B" | "E-C" | "E-D" | "E-E";
   email: string;
   sentiment: Sentiment;
   urgency: Urgency;
@@ -227,6 +227,16 @@ const EMAIL_D = `Subject: Downgrading from Business to Pro
 
 Hi, we're currently on the Business plan and want to move to Pro. When does the downgrade take effect? Do we get a partial refund for the rest of this month? And will we lose SSO?`;
 const CHUNKS_D = [PLANS_CHANGING, PLANS_PRO, PLANS_BUSINESS];
+
+// E-E: asks about something the knowledge base never addresses (a cap on
+// automation rules) next to something it does (what the next plan up adds).
+// The chunks describe Pro's features and even say "unlimited tickets", so a
+// confident "no cap" answer is a plausible-sounding inference from silence
+// — the failure mode these cases target — not a contradiction of the text.
+const EMAIL_E = `Subject: Automation rule limits on Pro
+
+Hi, we're on the Pro plan and about to build out our workflows. Is there a cap on how many automation rules we can create? And if we outgrow Pro, what does the next plan up add?`;
+const CHUNKS_E = [PLANS_PRO, PLANS_BUSINESS, PLANS_CHANGING];
 
 const GOOD_DOWNGRADE_REPLY = `Hi there,
 
@@ -582,6 +592,66 @@ Support Team`,
     checks: [
       { kind: "flagPresent", flag: "Invented policy or fact", backing: "prompt", severity: "must", why: "Billing-period, refund, SSO and seat claims are unsupported by the email alone." },
       ...criticalCaps("no context to ground the claims"),
+    ],
+  },
+  {
+    id: "BM-13",
+    failureMode: "Unsupported claim about an undocumented policy",
+    purpose:
+      "The customer asks about a limit the knowledge base never mentions. The reply confidently asserts there is no limit, wrapped in otherwise accurate plan facts. Tests that silence in the knowledge base is not treated as support for a company-specific claim — the unflagged 'no limit' inference is the failure this case guards against.",
+    scenario: "E-E",
+    email: EMAIL_E,
+    sentiment: "Neutral",
+    urgency: "Low",
+    retrievedChunks: CHUNKS_E,
+    reply: `Hi there,
+
+Great question — good to hear you're building out your workflows.
+
+There's no cap on the number of automation rules on the Pro plan, so you can create as many as your workflows need. Like tickets, automation rules are unlimited on Pro.
+
+If you outgrow Pro, the next plan up is Business at $79/month. It includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats (compared with 5 on Pro), and a dedicated account manager. Upgrading takes effect immediately, and you're charged a prorated amount for the rest of the current billing period.
+
+Let me know if you have any other questions.
+
+Best regards,
+Support Team`,
+    expectedSummary:
+      "'Invented policy or fact', groundedness <= 4, overall <= 4.9 (Do not send). The 'no cap' claim has no support in the email or knowledge base.",
+    checks: [
+      { kind: "flagPresent", flag: "Invented policy or fact", backing: "prompt", severity: "must", why: "The knowledge base never mentions an automation-rule limit, so 'no cap' / 'unlimited' is an invented policy." },
+      ...criticalCaps("unsupported claim about an undocumented limit"),
+    ],
+  },
+  {
+    id: "BM-14",
+    failureMode: "None — honest answer when the policy is undocumented",
+    purpose:
+      "Counterpart to BM-13 on the same email. Says the limit isn't documented instead of guessing, and answers the documented question fully. Tests that the stricter claim check doesn't penalize an honest 'I can't confirm that' or treat it as ignoring the question.",
+    scenario: "E-E",
+    email: EMAIL_E,
+    sentiment: "Neutral",
+    urgency: "Low",
+    retrievedChunks: CHUNKS_E,
+    reply: `Hi there,
+
+Thanks for checking before you build — that's a sensible time to ask.
+
+On automation rules: our plan documentation confirms that Pro includes a shared inbox with automation rules, but it doesn't state a maximum number of rules, so I don't want to give you a figure I can't confirm. I'll check with the team and follow up with a definite answer.
+
+If you outgrow Pro, the next plan up is Business at $79/month. It includes everything in Pro plus advanced automation rules, single sign-on (SSO), up to 20 user seats (compared with 5 on Pro), and a dedicated account manager. Upgrading takes effect immediately, and you're charged a prorated amount for the rest of the current billing period.
+
+Best regards,
+Support Team`,
+    expectedSummary:
+      "No critical flags, groundedness >= 8, no question 'unanswered' (the limit question may be 'partly answered'), overall 7.0–9.0.",
+    checks: [
+      NO_CRITICAL_FLAGS,
+      { kind: "dimensionMin", dimension: "groundedness", value: 8, backing: "prompt", severity: "must", why: "Every company fact is in the chunks; saying the limit isn't documented is not a claim about the limit." },
+      { kind: "questionStatusExcludes", statuses: ["unanswered"], backing: "prompt", severity: "must", why: "The limit question is addressed honestly, not ignored." },
+      { kind: "overallMin", value: 7.0, backing: "prompt", severity: "must", why: "Correct, grounded handling of missing information." },
+      { kind: "overallMax", value: 9.0, backing: "prompt", severity: "must", why: "Guards against inflation." },
+      { kind: "band", allowed: ["Ready to send", "Needs revision"], backing: "prompt", severity: "must", why: "Follows from 7.0–9.0." },
     ],
   },
 ];

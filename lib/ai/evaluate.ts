@@ -7,7 +7,9 @@
 // knowledge base together, not email alone, so a reply correctly citing a
 // real policy from the knowledge base isn't mistaken for a fabrication.
 // The model first lists each distinct customer question/request and whether
-// the reply answered it, then gives feedback, then scores six dimensions
+// the reply answered it, then lists each company-specific claim in the reply
+// with the source that supports it and the supporting words (see
+// CompanyClaim), then gives feedback, then scores six dimensions
 // (1-10) against an anchored rubric, then flags specific risky behaviors
 // (unsupported promises, invented facts, ignored questions, inappropriate
 // tone). We then enforce the rubric's hard limits in code so scores, flags
@@ -46,6 +48,22 @@ export type CustomerQuestion = {
   status: AnswerStatus;
 };
 
+export const CLAIM_SUPPORTS = ["email", "knowledge base", "unsupported"] as const;
+
+export type ClaimSupport = (typeof CLAIM_SUPPORTS)[number];
+
+// One company-specific factual or policy claim made by the reply, the
+// source the model says supports it, and the supporting words it cites.
+// Produced BEFORE scores, like CustomerQuestion, so groundedness is reasoned
+// claim by claim instead of judged as a whole — a holistic judgment let a
+// confident claim about an undocumented policy ("there's no limit on X")
+// pass as grounded because the facts around it were real.
+export type CompanyClaim = {
+  claim: string;
+  support: ClaimSupport;
+  evidence: string;
+};
+
 export type EvaluateInput = {
   email: string;
   reply: string;
@@ -60,6 +78,7 @@ export type EvaluateInput = {
 
 export type EvaluateResult = {
   customerQuestions: CustomerQuestion[];
+  companyClaims: CompanyClaim[];
   scores: Scores;
   overallScore: number;
   strengths: string;
@@ -88,15 +107,18 @@ Proposed reply:
 ${reply.trim()}
 """
 
-The customer email AND the knowledge base excerpts above are, together, the complete source of truth available for this reply. A specific company fact in the reply (a policy, price, refund rule, timeline, or procedure) is GROUNDED if it is supported by the email OR by the knowledge base excerpts — it does not need to appear in the email itself to be valid. Only treat a company-specific claim as ungrounded if it is not supported by either source.
+The customer email AND the knowledge base excerpts above are, together, the complete source of truth available for this reply. A specific company fact in the reply (a policy, price, limit, feature, refund rule, timeline, or procedure) is GROUNDED if it is supported by the email OR by the knowledge base excerpts — it does not need to appear in the email itself to be valid. Only treat a company-specific claim as ungrounded if it is not supported by either source.
+
+"Supported" means a source states the claim, or the claim follows directly from what a source states (e.g. a feature listed as an addition on a higher plan is not included in the lower plan). Silence is NOT support: if neither source addresses a topic at all, any company-specific claim about that topic is unsupported — including negative or permissive claims such as "there is no limit on X", "X is not restricted", "X is included at no extra cost", or "there is no deadline". This holds even when the claim sounds reasonable or matches a pattern elsewhere in the excerpts (e.g. one thing being unlimited does not make a different thing unlimited). Saying that information is not documented, or that the agent will check and follow up, is not a claim about the topic and is not unsupported.
 
 Work through the review in this order — each step informs the next, and your scores MUST be consistent with your analysis:
-1. customerQuestions: list every distinct question or explicit request in the customer email. For each, mark whether the reply "answered", "partly answered", or left it "unanswered".
-2. strengths: what the reply did well.
-3. improvements: what should be improved.
-4. topSuggestion: the single most important change.
-5. scores: score each dimension using the scale and hard limits below.
-6. riskFlags: report any risk flags that apply.
+1. customerQuestions: list every distinct question or explicit request in the customer email. For each, mark whether the reply "answered", "partly answered", or left it "unanswered". A reply that explicitly addresses a question by saying the answer isn't documented or can't be confirmed, and says how it will be resolved (e.g. the agent will check and follow up), has handled it honestly: mark it "partly answered", not "unanswered", and do not treat it as ignored.
+2. companyClaims: list every company-specific factual or policy claim in the reply — prices, plan features and limits, policies, refund rules, timelines, procedures, and statements about what the company has done (refunds issued, fixes made). Do NOT list: empathy or courtesy, restatements of the customer's own situation, questions to the customer, the agent's own next steps or commitments (e.g. "I'll check with the team", "I'll get back to you by end of day"), or statements that something isn't documented. For each claim set "support" to "knowledge base" or "email" if that source supports it (as defined above), otherwise "unsupported". "evidence" is the supporting words copied from that source, or "" when unsupported. The evidence must itself state what the claim asserts — for a limit, quantity, price, timeline, or "no limit" claim, it must state that same limit, quantity, price, or timeline. Evidence that only mentions the same topic (e.g. that a feature exists, when the claim is about how much of it you get) does not support the claim; if the best evidence you can find is like that, the claim is "unsupported".
+3. strengths: what the reply did well.
+4. improvements: what should be improved.
+5. topSuggestion: the single most important change.
+6. scores: score each dimension using the scale and hard limits below.
+7. riskFlags: report any risk flags that apply.
 
 Dimensions:
 ${SCORE_DIMENSIONS.map((d) => `- ${d}: ${DIMENSION_DESCRIPTIONS[d]}`).join("\n")}
@@ -124,11 +146,11 @@ Hard limits (a score must not exceed these):
 - completeness: max 6 if any customer question/request is unanswered; max 4 if two or more are unanswered.
 - groundedness: max 4 if the reply makes any unsupported company-specific claim; max 6 if it applies a real policy incorrectly to the customer's situation.
 
-Risk flags — check the reply against this fixed list and report any that apply (empty array if none). "Unsupported refund promise" and "Invented policy or fact" apply ONLY when the claim is unsupported by BOTH the email and the knowledge base excerpts above — a refund promise, price, or policy statement that matches the knowledge base excerpts is correct and must not be flagged. If any customer question/request is "unanswered", include "Ignored customer's question".
+Risk flags — check the reply against this fixed list and report any that apply (empty array if none). "Unsupported refund promise" and "Invented policy or fact" apply ONLY when the claim is unsupported by BOTH the email and the knowledge base excerpts above — a refund promise, price, or policy statement that matches the knowledge base excerpts is correct and must not be flagged. If any customer question/request is "unanswered", include "Ignored customer's question". If any company claim is "unsupported", include the matching fabrication flag ("Unsupported refund promise", "Unverified fix claim", or otherwise "Invented policy or fact").
 ${RISK_FLAG_TYPES.map((t) => `- ${t}`).join("\n")}
 
 Respond with ONLY a single JSON object (no extra text, no markdown fences) with keys in exactly this order and shape:
-{"customerQuestions": [{"question": "<the customer's question or request, briefly>", "status": "<answered | partly answered | unanswered>"}], "strengths": "<one or two sentences on what the reply did well>", "improvements": "<one or two sentences on what could be improved>", "topSuggestion": "<the single most important change to make>", "scores": {${SCORE_DIMENSIONS.map((d) => `"${d}": <1-10>`).join(", ")}}, "riskFlags": [{"type": "<one of the risk flag types above, verbatim>", "explanation": "<one sentence>"}]}`;
+{"customerQuestions": [{"question": "<the customer's question or request, briefly>", "status": "<answered | partly answered | unanswered>"}], "companyClaims": [{"claim": "<the claim, briefly>", "support": "<knowledge base | email | unsupported>", "evidence": "<supporting words from that source, or empty>"}], "strengths": "<one or two sentences on what the reply did well>", "improvements": "<one or two sentences on what could be improved>", "topSuggestion": "<the single most important change to make>", "scores": {${SCORE_DIMENSIONS.map((d) => `"${d}": <1-10>`).join(", ")}}, "riskFlags": [{"type": "<one of the risk flag types above, verbatim>", "explanation": "<one sentence>"}]}`;
 }
 
 // Thrown only by parseEvaluateResponse(), when the model's output is
@@ -148,6 +170,10 @@ function isScoreValue(value: unknown): value is number {
 
 function isAnswerStatus(value: unknown): value is AnswerStatus {
   return typeof value === "string" && (ANSWER_STATUSES as readonly string[]).includes(value);
+}
+
+function isClaimSupport(value: unknown): value is ClaimSupport {
+  return typeof value === "string" && (CLAIM_SUPPORTS as readonly string[]).includes(value);
 }
 
 function isRiskFlagType(value: unknown): value is RiskFlagType {
@@ -172,7 +198,7 @@ function parseEvaluateResponse(raw: string): Omit<EvaluateResult, "overallScore"
     throw new InvalidEvaluationOutputError("Model response was not a JSON object.");
   }
 
-  const { customerQuestions, scores, strengths, improvements, topSuggestion, riskFlags } =
+  const { customerQuestions, companyClaims, scores, strengths, improvements, topSuggestion, riskFlags } =
     parsed as Record<string, unknown>;
 
   if (!Array.isArray(customerQuestions)) {
@@ -190,6 +216,26 @@ function parseEvaluateResponse(raw: string): Omit<EvaluateResult, "overallScore"
       throw new InvalidEvaluationOutputError(`Customer question at index ${index} has an unknown status: ${JSON.stringify(status)}`);
     }
     return { question, status };
+  });
+
+  if (!Array.isArray(companyClaims)) {
+    throw new InvalidEvaluationOutputError("Model did not return a companyClaims array.");
+  }
+  const validatedClaims: CompanyClaim[] = companyClaims.map((item, index) => {
+    if (typeof item !== "object" || item === null) {
+      throw new InvalidEvaluationOutputError(`Company claim at index ${index} was not an object.`);
+    }
+    const { claim, support, evidence } = item as Record<string, unknown>;
+    if (typeof claim !== "string" || claim.trim().length === 0) {
+      throw new InvalidEvaluationOutputError(`Company claim at index ${index} is missing its text.`);
+    }
+    if (!isClaimSupport(support)) {
+      throw new InvalidEvaluationOutputError(`Company claim at index ${index} has an unknown support: ${JSON.stringify(support)}`);
+    }
+    if (typeof evidence !== "string") {
+      throw new InvalidEvaluationOutputError(`Company claim at index ${index} has non-string evidence.`);
+    }
+    return { claim, support, evidence };
   });
 
   if (typeof scores !== "object" || scores === null) {
@@ -234,6 +280,7 @@ function parseEvaluateResponse(raw: string): Omit<EvaluateResult, "overallScore"
 
   return {
     customerQuestions: validatedQuestions,
+    companyClaims: validatedClaims,
     scores: validatedScores,
     strengths,
     improvements,
@@ -254,12 +301,28 @@ function hasFlagIn(riskFlags: RiskFlag[], types: RiskFlagType[]): boolean {
  * structured signal are enforced — "generic/redirecting reply" (relevance)
  * and "real policy misapplied" (groundedness) are judgment calls left to
  * the prompt.
+ *
+ * Company claims follow the same pattern as questions: any claim the model
+ * marked "unsupported" raises "Invented policy or fact" unless a
+ * fabrication flag is already present — which in turn caps groundedness at
+ * 4 and the overall score at 4.9. The claim's "evidence" is kept for
+ * auditing but not string-matched against the sources: the evaluator model
+ * paraphrases its quotes often enough that exact matching flagged
+ * genuinely supported claims as fabricated.
  */
-function applyConsistencyRules(
+export function applyConsistencyRules(
   parsed: Omit<EvaluateResult, "overallScore">
 ): Omit<EvaluateResult, "overallScore"> {
   const scores = { ...parsed.scores };
   const riskFlags = [...parsed.riskFlags];
+
+  const unsupported = parsed.companyClaims.filter((c) => c.support === "unsupported");
+  if (unsupported.length > 0 && !hasFlagIn(riskFlags, CRITICAL_RISK_FLAG_TYPES)) {
+    riskFlags.push({
+      type: "Invented policy or fact",
+      explanation: `The reply makes ${unsupported.length === 1 ? "a company-specific claim" : `${unsupported.length} company-specific claims`} not supported by the email or knowledge base: ${unsupported.map((c) => `"${c.claim}"`).join(", ")}.`,
+    });
+  }
 
   const unanswered = parsed.customerQuestions.filter((q) => q.status === "unanswered");
   if (unanswered.length > 0 && !riskFlags.some((f) => f.type === "Ignored customer's question")) {

@@ -36,7 +36,7 @@ import { evaluateReply } from "../lib/ai/evaluate";
 import { getProvider } from "../lib/ai/provider";
 import { SCORE_DIMENSIONS, type ScoreDimension } from "../lib/ai/score-dimensions";
 import type { Sentiment, Urgency } from "../lib/ai/sentiment-labels";
-import type { RiskFlag, Scores } from "../lib/ai/evaluate";
+import type { CompanyClaim, RiskFlag, Scores } from "../lib/ai/evaluate";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
@@ -80,10 +80,17 @@ type SuccessResult = {
   status: "ok";
   sentiment: Sentiment;
   urgency: Urgency;
+  // What the reply was grounded in: past-reply example ids and knowledge
+  // chunk ids (with similarity), so each score can be traced to its inputs.
+  retrievedExamples: string[];
+  retrievedChunks: string[];
   generatedReply: string;
   scores: Scores;
   overallScore: number;
   riskFlags: RiskFlag[];
+  // Each company-specific claim the evaluator found, its support and the
+  // verbatim evidence — so a groundedness score can be audited claim by claim.
+  companyClaims: CompanyClaim[];
   rationale: {
     strengths: string;
     improvements: string;
@@ -188,10 +195,13 @@ async function evaluateOne(sample: SampleEmail): Promise<ItemResult> {
       status: "ok",
       sentiment: generated.sentiment,
       urgency: generated.urgency,
+      retrievedExamples: generated.retrievedExamples.map((e) => `${e.id}@${e.score.toFixed(3)}`),
+      retrievedChunks: generated.retrievedChunks.map((c) => `${c.id}@${c.score.toFixed(3)}`),
       generatedReply: generated.reply,
       scores: evaluation.scores,
       overallScore: evaluation.overallScore,
       riskFlags: evaluation.riskFlags,
+      companyClaims: evaluation.companyClaims,
       rationale: {
         strengths: evaluation.strengths,
         improvements: evaluation.improvements,
